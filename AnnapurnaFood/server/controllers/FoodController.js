@@ -1,6 +1,15 @@
 import { FoodModel } from "../models/Foodmodel.js";
 import { RestaurantModel } from "../models/Restaurantmodel.js";
+//we have
 
+addFood
+getAllFood
+getFoodById
+updateFood
+deleteFood
+getFoodByCategory
+getFoodByRestaurant
+updateFoodAvailability
 //  1️⃣ Add new food item (Admin / RestaurantAdmin)
 export const addFood = async (req, res) => {
   try {

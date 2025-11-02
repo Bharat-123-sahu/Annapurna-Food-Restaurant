@@ -1,6 +1,13 @@
 import { CartModel } from "../models/Cartmodel.js";
 import { FoodModel } from "../models/Foodmodel.js";
 
+// we have
+
+addToCart
+getCart
+updateQuantity
+removeItem
+clearCart
 //  1️⃣ Add item to cart
 export const addToCart = async (req, res) => {
   try {

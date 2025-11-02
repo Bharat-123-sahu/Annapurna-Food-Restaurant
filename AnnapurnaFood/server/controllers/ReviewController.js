@@ -1,6 +1,14 @@
 import { ReviewModel } from "../models/Reviewmodel.js";
 import { RestaurantModel } from "../models/RestaurantModel.js";
 import { UserModel } from "../models/Usermodel.js";
+//we have
+
+addReview
+getAllReviews
+getReviewsByRestaurant
+getReviewsByUser
+updateReview
+deleteReview
 
 //new review
 export const addReview = async (req, res) => {

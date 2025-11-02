@@ -1,9 +1,20 @@
 import { OrderModel } from "../models/Ordermodel.js";
 import { CartModel } from "../models/Cartmodel.js";
-import { UserModel } from "../models/Usermodel.js";
-import { RestaurantModel } from "../models/Restaurantmodel.js";
-import { FoodModel } from "../models/Food.js";
+// import { UserModel } from "../models/Usermodel.js";
+// import { RestaurantModel } from "../models/Restaurantmodel.js";
 
+
+import { FoodModel } from "../models/Foodmodel.js";
+// we have
+createOrder
+getAllOrders
+getUserOrders
+updateOrderStatus
+updatePaymentStatus
+  
+getOrderById
+cancelOrder
+deleteOrder
 //  1️⃣ Create a new order
 export const createOrder = async (req, res) => {
   try {

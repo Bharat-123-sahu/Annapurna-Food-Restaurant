@@ -5,6 +5,16 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
+// we have 
+registerAdmin
+loginAdmin
+verifyAdmin
+getAllAdmins
+updateAdmin
+deleteAdmin
+getAllRestaurants
+updateRestaurantStatus
+logoutAdmin
 
 //  Helper: Generate JWT Token
 const createToken = (id) => {

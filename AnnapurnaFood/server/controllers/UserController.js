@@ -8,6 +8,15 @@ dotenv.config();
 /**
  * Generate JWT Token
  */
+// we have
+registerUser
+loginUser
+logoutUser
+getUserProfile
+updateUserProfile
+changePassword
+getAllUsers
+
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_KEY, { expiresIn: "3d" });
 };

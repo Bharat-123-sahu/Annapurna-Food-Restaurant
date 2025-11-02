@@ -4,6 +4,15 @@ import { FoodModel } from "../models/Foodmodel.js";
 /**
  * Add a new restaurant
  */
+//we have
+
+addRestaurant
+getAllRestaurants
+getRestaurantById
+updateRestaurant
+deleteRestaurant
+getFoodsByRestaurant
+
 export const addRestaurant = async (req, res) => {
   try {
     const { name, email, address, phone, image, openingHours, ownerId } = req.body;
