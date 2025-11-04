@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
+export const ordersSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,                    // Order kis user ne kiya
+    required: true, // Order kis user ne kiya
   },
   items: [
     {
       food: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Food",
-        required: true,                // Kaunse food items order kiye
+        required: true, // Kaunse food items order kiye
       },
       quantity: {
         type: Number,
@@ -20,13 +20,13 @@ const orderSchema = new mongoose.Schema({
       },
       price: {
         type: Number,
-        required: true,                // Us food ka price
+        required: true, // Us food ka price
       },
     },
   ],
   totalAmount: {
     type: Number,
-    required: true,                    // Total order price
+    required: true, // Total order price
   },
   address: {
     street: { type: String, required: true },
@@ -38,7 +38,7 @@ const orderSchema = new mongoose.Schema({
   paymentMethod: {
     type: String,
     enum: ["COD", "Online"],
-    default: "COD",                   // Cash on Delivery or Online
+    default: "COD", // Cash on Delivery or Online
   },
   paymentStatus: {
     type: String,
@@ -55,7 +55,7 @@ const orderSchema = new mongoose.Schema({
       "Delivered",
       "Cancelled",
     ],
-    default: "Placed",                // Current stage of the order
+    default: "Placed", // Current stage of the order
   },
   restaurant: {
     type: mongoose.Schema.Types.ObjectId,
@@ -69,5 +69,3 @@ const orderSchema = new mongoose.Schema({
     type: Date,
   },
 });
-
-export const OrderModel = mongoose.model("Order", orderSchema);

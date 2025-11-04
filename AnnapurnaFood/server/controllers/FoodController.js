@@ -1,15 +1,15 @@
 import { FoodModel } from "../models/Foodmodel.js";
-import { RestaurantModel } from "../models/Restaurantmodel.js";
+import { RestaurentModel } from "../models/Restaurentmodel.js";
 //we have
 
-addFood
-getAllFood
-getFoodById
-updateFood
-deleteFood
-getFoodByCategory
-getFoodByRestaurant
-updateFoodAvailability
+// addFood
+// getAllFood
+// getFoodById
+// updateFood
+// deleteFood
+// getFoodByCategory
+// getFoodByRestaurant
+// updateFoodAvailability
 //  1️⃣ Add new food item (Admin / RestaurantAdmin)
 export const addFood = async (req, res) => {
   try {
@@ -20,7 +20,7 @@ export const addFood = async (req, res) => {
       return res.status(400).json({ message: "Required fields missing" });
 
     // Check restaurant exists
-    const restaurant = await RestaurantModel.findById(restaurantId);
+    const restaurant = await RestaurentModel.findById(restaurantId);
     if (!restaurant)
       return res.status(404).json({ message: "Restaurant not found" });
 

@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
+import { restaurentSchema } from "../schemas/RestaurentSchema.js";
 
-import { restaurentSchema } from "../schemas/RestaurentSchema";
-export const RestaurentModel =mongoose.model("restaurent",restaurentSchema)
+export const RestaurentModel = mongoose.model("restaurent", restaurentSchema);

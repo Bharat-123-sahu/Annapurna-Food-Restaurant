@@ -1,4 +1,5 @@
-import { RestaurantModel } from "../models/Restaurantmodel.js";
+// import { RestaurantModel } from "../models/Restaurantmodel.js";
+import { RestaurentModel } from "../models/Restaurentmodel.js";
 import { FoodModel } from "../models/Foodmodel.js";
 
 /**
@@ -6,12 +7,12 @@ import { FoodModel } from "../models/Foodmodel.js";
  */
 //we have
 
-addRestaurant
-getAllRestaurants
-getRestaurantById
-updateRestaurant
-deleteRestaurant
-getFoodsByRestaurant
+// addRestaurant
+// getAllRestaurants
+// getRestaurantById
+// updateRestaurant
+// deleteRestaurant
+// getFoodsByRestaurant
 
 export const addRestaurant = async (req, res) => {
   try {

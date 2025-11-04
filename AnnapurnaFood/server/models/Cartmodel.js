@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
 
-import { cartSchema } from "../schemas/CartSchema";
-export const CartModel =mongoose.model("cart",cartSchema)
+import { cartSchema } from "../schemas/CartSchema.js";
+export const CartModel = mongoose.model("cart", cartSchema);

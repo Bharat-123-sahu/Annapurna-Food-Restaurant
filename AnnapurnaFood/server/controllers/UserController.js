@@ -9,13 +9,13 @@ dotenv.config();
  * Generate JWT Token
  */
 // we have
-registerUser
-loginUser
-logoutUser
-getUserProfile
-updateUserProfile
-changePassword
-getAllUsers
+// registerUser
+// loginUser
+// logoutUser
+// getUserProfile
+// updateUserProfile
+// changePassword
+// getAllUsers
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_KEY, { expiresIn: "3d" });
@@ -196,3 +196,15 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ message: "Server error while fetching users" });
   }
 };
+//Delete user account
+export const deleteUserAccount=async(req,res)=>{
+  try{
+  const {id}=req.params;
+ await UserModel.findByIdAndDelete(id);
+  alert("conform delete");
+  res.status(200).json({"message":"user delete successful"})
+  }
+  catch(err){
+    console.error(err);
+  }
+}

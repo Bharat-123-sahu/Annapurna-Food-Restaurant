@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
 
-import { adminSchema } from "../schemas/AdminSchema";
-export const AdminModel = mongoose.model("cart", adminSchema);
+import { adminSchema } from "../schemas/AdminSchema.js";
+export const AdminModel = mongoose.model("admin", adminSchema);

@@ -1,28 +1,30 @@
 import express from "express";
 import {
-  createFoodItem,
-  getAllFoods,
+  addFood,
+  getAllFood,
   getFoodById,
-  updateFoodItem,
-  deleteFoodItem,
-  getFoodsByCategory,
-  getFoodsByRestaurant,
+  updateFood,
+  deleteFood,
+  getFoodByCategory,
+  getFoodByRestaurant,
+  updateFoodAvailability,
 } from "../controllers/FoodController.js";
 
 import { userVerification } from "../middleware/Authmiddleware.js";
-import { isAdmin } from "../middleware/isAdmin.js"; // optional - if only admin can manage food
+import { isAdmin } from "../middleware/isAdminmiddleware.js"; // optional - if only admin can manage food
 
 const FoodRouter = express.Router();
 
 // ---------- Public Routes ----------
-FoodRouter.get("/", getAllFoods);
+FoodRouter.get("/", getAllFood);
 FoodRouter.get("/:id", getFoodById);
-FoodRouter.get("/category/:category", getFoodsByCategory);
-FoodRouter.get("/restaurant/:restaurantId", getFoodsByRestaurant);
+FoodRouter.get("/:category", getFoodByCategory);
+FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
+FoodRouter.put("/update/available", updateFoodAvailability);
 
 // ---------- Admin Routes ----------
-FoodRouter.post("/create", userVerification, isAdmin, createFoodItem);
-FoodRouter.put("/update/:id", userVerification, isAdmin, updateFoodItem);
-FoodRouter.delete("/delete/:id", userVerification, isAdmin, deleteFoodItem);
+FoodRouter.post("/add", userVerification, isAdmin, addFood);
+FoodRouter.put("/update/:id", userVerification, isAdmin, updateFood);
+FoodRouter.delete("/delete/:id", userVerification, isAdmin, deleteFood);
 
 export default FoodRouter;

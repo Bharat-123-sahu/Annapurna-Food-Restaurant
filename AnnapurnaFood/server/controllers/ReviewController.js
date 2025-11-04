@@ -1,14 +1,14 @@
 import { ReviewModel } from "../models/Reviewmodel.js";
-import { RestaurantModel } from "../models/RestaurantModel.js";
+import { RestaurentModel } from "../models/Restaurentmodel.js";
 import { UserModel } from "../models/Usermodel.js";
 //we have
 
-addReview
-getAllReviews
-getReviewsByRestaurant
-getReviewsByUser
-updateReview
-deleteReview
+// addReview
+// getAllReviews
+// getReviewsByRestaurant
+// getReviewsByUser
+// updateReview
+// deleteReview
 
 //new review
 export const addReview = async (req, res) => {
@@ -89,7 +89,7 @@ export const getReviewsByUser = async (req, res) => {
     const { userId } = req.params;
 
     const reviews = await ReviewModel.find({ userId }).populate(
-      "restaurantId",
+      "restaurant",
       "name"
     );
 

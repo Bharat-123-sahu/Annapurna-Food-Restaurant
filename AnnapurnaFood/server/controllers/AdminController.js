@@ -1,20 +1,25 @@
 import { AdminModel } from "../models/Adminmodel.js";
-import { RestaurantModel } from "../models/Restaurantmodel.js";
+import { RestaurentModel } from "../models/Restaurentmodel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+// import { getAllUsers } from "./UserController.js";
+import { UserModel } from "../models/Usermodel.js";
+
 
 dotenv.config();
-// we have 
-registerAdmin
-loginAdmin
-verifyAdmin
-getAllAdmins
-updateAdmin
-deleteAdmin
-getAllRestaurants
-updateRestaurantStatus
-logoutAdmin
+// we have
+// registerAdmin;
+// loginAdmin;
+// verifyAdmin;
+// getAllAdmins;
+// updateAdmin;
+// deleteAdmin;
+// getAllRestaurants;
+// updateRestaurantStatus;
+// logoutAdmin;
+// getAllUsers;
+// deleteRestaurant
 
 //  Helper: Generate JWT Token
 const createToken = (id) => {
@@ -140,7 +145,7 @@ export const deleteAdmin = async (req, res) => {
   try {
     const { id } = req.params;
     await AdminModel.findByIdAndDelete(id);
-    alert("conform delete")
+    alert("conform delete");
     res.json({ message: "Admin deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting admin", error });
@@ -150,7 +155,7 @@ export const deleteAdmin = async (req, res) => {
 //  7️⃣ Get all restaurants (for superadmin dashboard)
 export const getAllRestaurants = async (req, res) => {
   try {
-    const restaurants = await RestaurantModel.find();
+    const restaurants = await RestaurentModel.find();
     res.json(restaurants);
   } catch (error) {
     res.status(500).json({ message: "Error fetching restaurants", error });
@@ -163,7 +168,7 @@ export const updateRestaurantStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body; // approved / rejected
 
-    const restaurant = await RestaurantModel.findByIdAndUpdate(
+    const restaurant = await RestaurentModel.findByIdAndUpdate(
       id,
       { status },
       { new: true }
@@ -182,3 +187,27 @@ export const updateRestaurantStatus = async (req, res) => {
 export const logoutAdmin = (req, res) => {
   res.clearCookie("token").json({ message: "Admin logged out successfully" });
 };
+// 🔟 get all users
+
+export const getAllUsers = async (req,res)=>{
+  try{
+ const getalluser = await UserModel.find();
+ res.json(getalluser);
+  }catch(err){
+    console.log(err)
+  }
+}
+// 1️⃣1️⃣delete restaurent
+export const deleteRestaurant =async (req,res)=>{
+  try{
+  const {id}=req.params;
+  await RestaurentModel.findByIdAndDelete(id);
+  alert("conform delete ");
+ 
+res.json({"message":"delete successfully"})
+
+  }
+  catch(err){
+    console.error(err);
+  }
+}

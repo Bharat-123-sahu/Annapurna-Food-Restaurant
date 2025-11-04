@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
 
-import { reviewSchema } from "../schemas/ReviewSchema";
-export const ReviewModel =mongoose.model("Cart",reviewSchema)
+import { reviewSchema } from "../schemas/ReviewSchema.js";
+export const ReviewModel =mongoose.model("review",reviewSchema)

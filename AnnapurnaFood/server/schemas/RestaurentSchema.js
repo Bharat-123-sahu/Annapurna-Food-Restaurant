@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-export const restaurantSchema = new mongoose.Schema({
+export const restaurentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   ownerName: String,
   email: String,
