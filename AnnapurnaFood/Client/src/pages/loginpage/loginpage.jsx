@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, /*useNavigate*/ } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "animate.css";
+// const navigate = useNavigate();
 
 const Login = () => {
-  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
@@ -31,14 +31,14 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "http://localhost:1245/login",
+        "http://localhost:2000/login",
         { ...inputValue },
         { withCredentials: true }
       );
 
       if (data.message === "User login successful") {
         handleSuccess("Login Successful! Redirecting...");
-        setTimeout(() => navigate("/home"), 1500);
+        // setTimeout(() => navigate("/home"), 1500);
       } else {
         handleError(data.message || "Login failed");
       }

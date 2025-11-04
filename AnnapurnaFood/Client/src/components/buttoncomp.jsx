@@ -1,5 +1,3 @@
-
-
 export function Button({ children, variant = 'primary', size = 'sm', className = '', ...props }) {
   
   // Base Bootstrap class
