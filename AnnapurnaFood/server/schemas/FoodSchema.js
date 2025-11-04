@@ -31,17 +31,17 @@ export const foodSchema = new mongoose.Schema({
     default: true, // Show/hide out of stock items
   },
   restaurant: {
-    type: String, // Example: "Domino’s Pizza"
+   type: mongoose.Schema.Types.ObjectId,ref:"restaurent" ,required:true   // Example: "Domino’s Pizza"
   },
   tags: [
     {
       type: String, // Example: "Spicy", "Veg", "Cheesy"
     },
   ],
-  author:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'restaurent'
-  },
+  // author:{
+  //   type:mongoose.Schema.Types.ObjectId,
+  //   ref:'restaurent'
+  // },
   createdAt: {
     type: Date,
     default: Date.now, // Auto timestamp

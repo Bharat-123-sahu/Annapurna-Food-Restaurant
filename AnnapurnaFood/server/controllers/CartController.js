@@ -55,7 +55,7 @@ export const addToCart = async (req, res) => {
     }
 
     // Calculate total price
-    cart.totalAmount = cart.items.reduce(
+    cart.totalPrice = cart.items.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
@@ -106,7 +106,7 @@ export const updateQuantity = async (req, res) => {
 
     item.quantity = quantity;
 
-    cart.totalAmount = cart.items.reduce(
+    cart.totalPrice = cart.items.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
@@ -131,7 +131,7 @@ export const removeItem = async (req, res) => {
       (item) => item.food.toString() !== foodId.toString()
     );
 
-    cart.totalAmount = cart.items.reduce(
+    cart.totalPrice = cart.items.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
@@ -154,7 +154,7 @@ export const clearCart = async (req, res) => {
       return res.status(404).json({ message: "Cart not found for this user" });
 
     cart.items = [];
-    cart.totalAmount = 0;
+    cart.totalPrice = 0;
 
     await cart.save();
 

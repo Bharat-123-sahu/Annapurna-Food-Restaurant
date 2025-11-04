@@ -16,20 +16,23 @@ import { FoodModel } from "../models/Foodmodel.js";
 
 export const addRestaurant = async (req, res) => {
   try {
-    const { name, email, address, phone, image, openingHours, ownerId } = req.body;
+    const { name, email, address, phone, image, openingHours } = req.body;
+
+   const ownerId= req.user._id;
+
 
     if (!name || !email || !address || !phone || !ownerId) {
       return res.status(400).json({ message: "All required fields must be filled!" });
     }
 
-    const restaurant = await RestaurantModel.create({
+    const restaurant = await RestaurentModel.create({
       name,
       email,
       address,
       phone,
       image,
       openingHours,
-      ownerId,
+      ownerId:ownerId,
     });
 
     res.status(201).json({ message: "Restaurant added successfully", restaurant });

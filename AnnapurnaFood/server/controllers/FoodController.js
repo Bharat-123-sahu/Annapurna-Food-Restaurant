@@ -101,7 +101,7 @@ export const deleteFood = async (req, res) => {
     if (!food) return res.status(404).json({ message: "Food not found" });
 
     // Remove from restaurant menu
-    await RestaurantModel.findByIdAndUpdate(food.restaurant, {
+    await RestaurentModel.findByIdAndUpdate(food.restaurant, {
       $pull: { menu: food._id },
     });
 
