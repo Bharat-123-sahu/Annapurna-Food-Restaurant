@@ -1,6 +1,7 @@
 // import { RestaurantModel } from "../models/Restaurantmodel.js";
 import { RestaurentModel } from "../models/Restaurentmodel.js";
 import { FoodModel } from "../models/Foodmodel.js";
+import jwt from "jsonwebtoken";
 
 /**
  * Add a new restaurant
@@ -13,17 +14,21 @@ import { FoodModel } from "../models/Foodmodel.js";
 // updateRestaurant
 // deleteRestaurant
 // getFoodsByRestaurant
+const createtoken = (id)=>{
+return jwt.sign({id},process.env.TOKEN_KEY,{"expireIn":"3d"})
+}
 
 export const addRestaurant = async (req, res) => {
   try {
-    const { name, email, address, phone, image, openingHours } = req.body;
+    const { name,password, email, address, phone, image, openingHours } = req.body;
 
    const ownerId= req.user._id;
 
 
-    if (!name || !email || !address || !phone || !ownerId) {
+    if (!name ||!password || !email || !address || !phone || !ownerId) {
       return res.status(400).json({ message: "All required fields must be filled!" });
     }
+    const hashpassword =await bcrypt.hash(password,10);
 
     const restaurant = await RestaurentModel.create({
       name,
@@ -33,6 +38,7 @@ export const addRestaurant = async (req, res) => {
       image,
       openingHours,
       ownerId:ownerId,
+      password:hashpassword,
     });
 
     res.status(201).json({ message: "Restaurant added successfully", restaurant });
@@ -45,9 +51,38 @@ export const addRestaurant = async (req, res) => {
 /**
  * Get all restaurants
  */
+export const loginRestaurent =async (req,res)=>{
+  try{
+ const {email,password}=req.body;
+ const user =await RestaurentModel.findOne({email});
+ if(!user){
+  res.status(400).json({"messsage":"invalid email and password"}) }
+  
+ const pass =await RestaurentModel.compare(password,restaurent.password);
+if(!pass){
+  res.status(400).json({"message":"email and password is invalid"})
+}
+const token =createtoken(user.id);//const token =createtoken(user.id);//
+res.cookies("token",token,{
+   httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 3 * 24 * 60 * 60 * 1000,
+}).json({
+  message:"restaurent login successfully",token,restaurent:{
+   name:user.name,
+   email:user.email,
+   id:ownerId,
+  }
+})
+ }
+  catch(err){
+    res.status(500).json({"message":"login err"})
+  }
+}
 export const getAllRestaurants = async (req, res) => {
   try {
-    const restaurants = await RestaurantModel.find();
+    const restaurants = await RestaurentModel.find();
     res.status(200).json({ restaurants });
   } catch (error) {
     console.error("Error fetching restaurants:", error);

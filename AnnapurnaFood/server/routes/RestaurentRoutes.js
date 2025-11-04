@@ -5,6 +5,8 @@ import {
   getRestaurantById,
   updateRestaurant,
   deleteRestaurant,
+  loginRestaurent,
+  getFoodsByRestaurant
   // getFoodsByRestaurant
 } from "../controllers/RestaurentController.js";
 
@@ -16,7 +18,9 @@ const RestaurentRouter = express.Router();
 // ---------- Public Routes ----------
 RestaurentRouter.get("/", getAllRestaurants); // Get all restaurants
 RestaurentRouter.get("/:id", getRestaurantById); // Get one restaurant by ID
-RestaurentRouter.get("/food/:id", getAllRestaurants); // Get all foods of a restaurant
+RestaurentRouter.get("/food/:id",userVerification, getFoodsByRestaurant); // Get all foods of a restaurant
+RestaurentRouter.get("/login",userVerification, loginRestaurent); // 
+
 
 // ---------- Admin Routes ----------
 RestaurentRouter.post(
