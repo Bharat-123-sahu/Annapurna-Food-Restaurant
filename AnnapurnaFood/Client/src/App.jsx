@@ -1,12 +1,11 @@
-import "./App.css";
-import Login from "./pages/loginpage/loginpage";
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter,Router,Route } from "react-router-dom";
+import App from "./App";
 
-function App() {
-  return (
-    <>
-      <Login />
-    </>
-  );
-}
-
-export default App;
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("root")
+);
