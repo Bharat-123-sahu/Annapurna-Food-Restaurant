@@ -12,6 +12,7 @@ import {
 
 import { userVerification } from "../middleware/Authmiddleware.js";
 import { isAdmin } from "../middleware/isAdminmiddleware.js"; // optional - if only admin can manage food
+import { RestaurantVerification } from "../middleware/isrestaurentmiddleware.js";
 
 const FoodRouter = express.Router();
 
@@ -23,8 +24,8 @@ FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
 FoodRouter.put("/update/available", updateFoodAvailability);
 
 // ---------- Admin Routes ----------
-FoodRouter.post("/add/:id", userVerification, isAdmin, addFood);
-FoodRouter.put("/update/:id", userVerification, isAdmin, updateFood);
-FoodRouter.delete("/delete/:id", userVerification, isAdmin, deleteFood);
+FoodRouter.post("/add/:id", RestaurantVerification , addFood);
+FoodRouter.put("/update/:id", RestaurantVerification, updateFood);
+FoodRouter.delete("/delete/:id",  RestaurantVerification, deleteFood);
 
 export default FoodRouter;
