@@ -23,7 +23,7 @@ FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
 FoodRouter.put("/update/available", updateFoodAvailability);
 
 // ---------- Admin Routes ----------
-FoodRouter.post("/add", userVerification, isAdmin, addFood);
+FoodRouter.post("/add/:id", userVerification, isAdmin, addFood);
 FoodRouter.put("/update/:id", userVerification, isAdmin, updateFood);
 FoodRouter.delete("/delete/:id", userVerification, isAdmin, deleteFood);
 

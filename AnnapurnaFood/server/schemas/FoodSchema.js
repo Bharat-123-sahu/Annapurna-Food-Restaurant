@@ -31,7 +31,7 @@ export const foodSchema = new mongoose.Schema({
     default: true, // Show/hide out of stock items
   },
   restaurant: {
-   type: mongoose.Schema.Types.ObjectId,ref:"restaurent" ,required:true   // Example: "Domino’s Pizza"
+   type: mongoose.Schema.Types.ObjectId , ref:"restaurent" ,required:true   // Example: "Domino’s Pizza"
   },
   tags: [
     {

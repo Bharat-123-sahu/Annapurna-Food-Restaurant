@@ -33,14 +33,14 @@ AdminRouter.get("/allusers", userVerification, getAllUsers);
 // AdminRouter.delete("/user/:id", userVerification, deleteUsers);
 
 // ---------- Manage Restaurants ----------
-AdminRouter.get("/restaurants", userVerification, getAllRestaurants);
+AdminRouter.get("/restaurents", userVerification, getAllRestaurants);
 AdminRouter.delete("/restaurant/:id", userVerification, deleteRestaurant);
 
 // ---------- Manage Orders ----------
 //  AdminRouter.get("/orders", userVerification, getAllOrders);
 // AdminRouter.delete("/order/:id", userVerification, deleteOrder);
-AdminRouter.patch("/update", updateAdmin);
-AdminRouter.patch("/restaurent/status", updateRestaurantStatus);
+AdminRouter.patch("/update",isAdmin,updateAdmin);
+AdminRouter.patch("/restaurent/status/:id", updateRestaurantStatus);
 
 AdminRouter.get("/logout", logoutAdmin);
 export default AdminRouter;

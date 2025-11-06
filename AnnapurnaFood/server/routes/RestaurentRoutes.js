@@ -19,8 +19,8 @@ const RestaurentRouter = express.Router();
 RestaurentRouter.get("/", getAllRestaurants); // Get all restaurants
 RestaurentRouter.get("/:id", getRestaurantById); // Get one restaurant by ID
 RestaurentRouter.get("/food/:id",userVerification, getFoodsByRestaurant); // Get all foods of a restaurant
-RestaurentRouter.get("/login",userVerification, loginRestaurent); // 
-
+RestaurentRouter.post("/login",userVerification, loginRestaurent); // 
+//add food by restaurent
 
 // ---------- Admin Routes ----------
 RestaurentRouter.post(
@@ -29,7 +29,7 @@ RestaurentRouter.post(
   isAdmin,
   addRestaurant
 ); // Add new restaurant
-RestaurentRouter.put(
+RestaurentRouter.patch(
   "/update/:id",
   userVerification,
   isAdmin,

@@ -14,7 +14,7 @@ const UserRouter = express.Router();
 
 // ---------- Auth ----------
 UserRouter.post("/register", registerUser);
-UserRouter.post("/login", loginUser);
+UserRouter.post("/login", userVerification,loginUser);
 UserRouter.post("/logout", logoutUser);
 
 // ---------- Profile ----------
