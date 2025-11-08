@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const CustomAlert = ({
   severity = "info", // info, success, warning, error
-  message="wrong text field",
+  message = "wrong text field",
   open = true,
   onClose,
   variant = "outlined", // filled, outlined, standard

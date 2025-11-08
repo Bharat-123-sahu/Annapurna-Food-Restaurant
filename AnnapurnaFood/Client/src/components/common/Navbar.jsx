@@ -1,10 +1,19 @@
 // Navbar.jsx
 import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Badge, Menu, MenuItem, Typography, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  Menu,
+  MenuItem,
+  Typography,
+  Button,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -37,7 +46,7 @@ const Navbar = () => {
               sx={{
                 mx: 1,
                 fontWeight: 500,
-                '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' },
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.2)" },
               }}
             >
               {link}
@@ -71,7 +80,10 @@ const Navbar = () => {
 
         {/* Mobile Hamburger */}
         <div className="d-md-none">
-          <IconButton color="inherit" onClick={() => setMobileOpen(!mobileOpen)}>
+          <IconButton
+            color="inherit"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
             <MenuIcon />
           </IconButton>
         </div>
@@ -95,10 +107,18 @@ const Navbar = () => {
               {link}
             </Button>
           ))}
-          <Button fullWidth color="inherit" sx={{ justifyContent: "flex-start", my: 0.5 }}>
+          <Button
+            fullWidth
+            color="inherit"
+            sx={{ justifyContent: "flex-start", my: 0.5 }}
+          >
             Cart (3)
           </Button>
-          <Button fullWidth color="inherit" sx={{ justifyContent: "flex-start", my: 0.5 }}>
+          <Button
+            fullWidth
+            color="inherit"
+            sx={{ justifyContent: "flex-start", my: 0.5 }}
+          >
             Profile
           </Button>
         </div>

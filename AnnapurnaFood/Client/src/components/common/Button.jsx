@@ -1,10 +1,10 @@
 // ResponsiveButton.jsx
 import React from "react";
-import  Button  from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const CustomButton = ({
-  text="click",
+  text = "click",
   color = "primary",
   variant = "contained",
   size = "medium",

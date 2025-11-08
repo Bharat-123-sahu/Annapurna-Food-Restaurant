@@ -1,7 +1,7 @@
 // FormField.jsx
 import React from "react";
 import TextField from "@mui/material/TextField";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const FormField = ({
   label,
@@ -13,7 +13,7 @@ const FormField = ({
   error = false,
   helperText = "",
   responsive = true,
-  required = false
+  required = false,
 }) => {
   return (
     <div className={responsive ? "mb-3 col-12 col-md-6" : "mb-3"}>
@@ -29,25 +29,25 @@ const FormField = ({
         required={required}
         variant="outlined"
         sx={{
-          '& .MuiOutlinedInput-root': {
+          "& .MuiOutlinedInput-root": {
             borderRadius: "12px",
           },
-          '& .MuiInputLabel-root': {
+          "& .MuiInputLabel-root": {
             fontWeight: 500,
           },
-          '& .MuiFormHelperText-root': {
+          "& .MuiFormHelperText-root": {
             fontSize: "0.85rem",
           },
-          '@media (max-width: 576px)': {
-            '& .MuiOutlinedInput-input': {
+          "@media (max-width: 576px)": {
+            "& .MuiOutlinedInput-input": {
               padding: "8px 10px",
             },
-            '& .MuiInputLabel-root': {
+            "& .MuiInputLabel-root": {
               fontSize: "0.85rem",
             },
           },
-          '@media (min-width: 577px) and (max-width: 768px)': {
-            '& .MuiOutlinedInput-input': {
+          "@media (min-width: 577px) and (max-width: 768px)": {
+            "& .MuiOutlinedInput-input": {
               padding: "10px 12px",
             },
           },

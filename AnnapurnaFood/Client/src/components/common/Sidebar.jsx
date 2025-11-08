@@ -1,11 +1,18 @@
 // Sidebar.jsx
 import React, { useState } from "react";
-import { List, ListItem, ListItemText, ListItemIcon, Collapse, IconButton } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Collapse,
+  IconButton,
+} from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Sidebar = ({ links = [] }) => {
   const [open, setOpen] = useState(false);
@@ -44,10 +51,10 @@ const Sidebar = ({ links = [] }) => {
               }}
               className="mb-1 rounded"
               sx={{
-                '&.Mui-selected': {
-                  backgroundColor: '#1976d2',
-                  color: 'white',
-                  '& .MuiListItemIcon-root': { color: 'white' },
+                "&.Mui-selected": {
+                  backgroundColor: "#1976d2",
+                  color: "white",
+                  "& .MuiListItemIcon-root": { color: "white" },
                 },
               }}
             >

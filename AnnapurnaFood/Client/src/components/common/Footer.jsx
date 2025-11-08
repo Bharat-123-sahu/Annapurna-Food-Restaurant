@@ -4,14 +4,14 @@ import { Typography, IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Footer = () => {
   const quickLinks = ["Home", "Restaurants", "Menu", "Orders", "Contact"];
   const customerService = ["FAQ", "Support", "Terms", "Privacy"];
 
   return (
-    <footer className="bg-dark text-white pt-5 pb-3 mt-5">
+    <footer className="bg-dark text-white pt-5 pb-3 ">
       <div className="container">
         <div className="row">
           {/* Brand & About */}
@@ -20,7 +20,8 @@ const Footer = () => {
               FoodieApp
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Delivering happiness to your doorstep with fresh and delicious meals.
+              Delivering happiness to your doorstep with fresh and delicious
+              meals.
             </Typography>
           </div>
 
@@ -32,7 +33,9 @@ const Footer = () => {
             <ul className="list-unstyled">
               {quickLinks.map((link) => (
                 <li key={link} className="mb-1">
-                  <a href="#" className="text-white text-decoration-none">{link}</a>
+                  <a href="#" className="text-white text-decoration-none">
+                    {link}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -46,7 +49,9 @@ const Footer = () => {
             <ul className="list-unstyled">
               {customerService.map((link) => (
                 <li key={link} className="mb-1">
-                  <a href="#" className="text-white text-decoration-none">{link}</a>
+                  <a href="#" className="text-white text-decoration-none">
+                    {link}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -59,13 +64,13 @@ const Footer = () => {
             </Typography>
             <div className="d-flex">
               <IconButton color="inherit" href="#">
-                <FacebookIcon sx={{ color: 'white' }} />
+                <FacebookIcon sx={{ color: "white" }} />
               </IconButton>
               <IconButton color="inherit" href="#">
-                <TwitterIcon sx={{ color: 'white' }} />
+                <TwitterIcon sx={{ color: "white" }} />
               </IconButton>
               <IconButton color="inherit" href="#">
-                <InstagramIcon sx={{ color: 'white' }} />
+                <InstagramIcon sx={{ color: "white" }} />
               </IconButton>
             </div>
           </div>

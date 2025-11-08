@@ -5,7 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const SearchBar = ({ placeholder = "Search...", onSearch }) => {
   const [query, setQuery] = useState("");
@@ -45,16 +45,16 @@ const SearchBar = ({ placeholder = "Search...", onSearch }) => {
         }}
         sx={{
           borderRadius: "12px",
-          '& .MuiOutlinedInput-root': {
+          "& .MuiOutlinedInput-root": {
             borderRadius: "12px",
           },
-          '@media (max-width: 576px)': {
-            '& .MuiOutlinedInput-input': {
+          "@media (max-width: 576px)": {
+            "& .MuiOutlinedInput-input": {
               padding: "8px 12px",
             },
           },
-          '@media (min-width: 577px) and (max-width: 768px)': {
-            '& .MuiOutlinedInput-input': {
+          "@media (min-width: 577px) and (max-width: 768px)": {
+            "& .MuiOutlinedInput-input": {
               padding: "10px 14px",
             },
           },

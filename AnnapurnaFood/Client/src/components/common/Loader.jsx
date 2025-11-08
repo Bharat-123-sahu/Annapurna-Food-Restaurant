@@ -1,17 +1,33 @@
 // Loader.jsx
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const Loader = ({ size = 60, color = "primary", fullScreen = false, text = "" }) => {
+const Loader = ({
+  size = 60,
+  color = "primary",
+  fullScreen = false,
+  text = "",
+}) => {
   return (
     <div
-      className={`d-flex justify-content-center align-items-center ${fullScreen ? "position-fixed top-0 start-0 w-100 h-100 bg-light bg-opacity-75" : ""}`}
-      style={{ zIndex: fullScreen ? 1050 : "auto", minHeight: fullScreen ? "100vh" : "auto" }}
+      className={`d-flex justify-content-center align-items-center ${
+        fullScreen
+          ? "position-fixed top-0 start-0 w-100 h-100 bg-light bg-opacity-75"
+          : ""
+      }`}
+      style={{
+        zIndex: fullScreen ? 1050 : "auto",
+        minHeight: fullScreen ? "100vh" : "auto",
+      }}
     >
       <div className="text-center">
         <CircularProgress color={color} size={size} />
-        {text && <div className="mt-2" style={{ fontWeight: 500 }}>{text}</div>}
+        {text && (
+          <div className="mt-2" style={{ fontWeight: 500 }}>
+            {text}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,14 @@
 // Pagination.jsx
 import React from "react";
-import { Pagination as MUIPagination, Stack, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Pagination as MUIPagination,
+  Stack,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const PagePagination = ({
   totalPages = 1,
@@ -9,7 +16,7 @@ const PagePagination = ({
   onChange,
   showItemsPerPage = false,
   itemsPerPage = 10,
-  onItemsPerPageChange
+  onItemsPerPageChange,
 }) => {
   return (
     <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
@@ -20,10 +27,14 @@ const PagePagination = ({
           <Select
             value={itemsPerPage}
             label="Items/Page"
-            onChange={(e) => onItemsPerPageChange && onItemsPerPageChange(e.target.value)}
+            onChange={(e) =>
+              onItemsPerPageChange && onItemsPerPageChange(e.target.value)
+            }
           >
             {[5, 10, 20, 50].map((num) => (
-              <MenuItem key={num} value={num}>{num}</MenuItem>
+              <MenuItem key={num} value={num}>
+                {num}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -39,11 +50,11 @@ const PagePagination = ({
           variant="outlined"
           shape="rounded"
           sx={{
-            '& .MuiPaginationItem-root': {
-              borderRadius: '8px',
-              minWidth: '36px',
-              height: '36px',
-              fontWeight: 500
+            "& .MuiPaginationItem-root": {
+              borderRadius: "8px",
+              minWidth: "36px",
+              height: "36px",
+              fontWeight: 500,
             },
           }}
         />

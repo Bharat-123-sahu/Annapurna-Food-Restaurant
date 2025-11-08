@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 /**
  * ProtectedRoutes
- * Usage: Wrap your routes inside <Route element={<ProtectedRoutes />}> 
+ * Usage: Wrap your routes inside <Route element={<ProtectedRoutes />}>
  * This component will check if user is authenticated.
  */
 const ProtectedRoutes = ({ isAuthenticated }) => {

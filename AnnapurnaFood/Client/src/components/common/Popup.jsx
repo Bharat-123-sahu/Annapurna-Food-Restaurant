@@ -4,10 +4,10 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Popup = ({
-  open="open",
+  open = "open",
   onClose,
   title = "hahaha",
   children,
@@ -19,20 +19,20 @@ const Popup = ({
       onClose={onClose}
       aria-labelledby="popup-title"
       aria-describedby="popup-content"
-    sx={{backgroundColor:"green"}}
+      sx={{ backgroundColor: "green" }}
     >
       <Box
         className="container bg-white p-4 rounded shadow"
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: { xs: '90%', sm: maxWidth },
-          maxWidth: '95%',
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: { xs: "90%", sm: maxWidth },
+          maxWidth: "95%",
           borderRadius: 2,
           boxShadow: 24,
-          outline: 'none',
+          outline: "none",
         }}
       >
         {/* Header */}
@@ -44,9 +44,7 @@ const Popup = ({
         </div>
 
         {/* Content */}
-        <div className="popup-content">
-          {children}
-        </div>
+        <div className="popup-content">{children}</div>
       </Box>
     </Modal>
   );
@@ -90,4 +88,3 @@ export default Popup;
 // };
 
 // export default App;
-
