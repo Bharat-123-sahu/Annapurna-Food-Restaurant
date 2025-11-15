@@ -57,7 +57,8 @@ const PaymentOption = ({ onConfirm }) => {
             <Box
               className="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
               sx={{
-                border: selected === "upi" ? "2px solid #FF6A00" : "1px solid #ddd",
+                border:
+                  selected === "upi" ? "2px solid #FF6A00" : "1px solid #ddd",
                 backgroundColor:
                   selected === "upi" ? "rgba(255,106,0,0.08)" : "#fff",
                 transition: "all 0.2s ease-in-out",
@@ -80,7 +81,8 @@ const PaymentOption = ({ onConfirm }) => {
             <Box
               className="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
               sx={{
-                border: selected === "card" ? "2px solid #FF6A00" : "1px solid #ddd",
+                border:
+                  selected === "card" ? "2px solid #FF6A00" : "1px solid #ddd",
                 backgroundColor:
                   selected === "card" ? "rgba(255,106,0,0.08)" : "#fff",
               }}
@@ -103,11 +105,11 @@ const PaymentOption = ({ onConfirm }) => {
               className="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
               sx={{
                 border:
-                  selected === "netbanking" ? "2px solid #FF6A00" : "1px solid #ddd",
-                backgroundColor:
                   selected === "netbanking"
-                    ? "rgba(255,106,0,0.08)"
-                    : "#fff",
+                    ? "2px solid #FF6A00"
+                    : "1px solid #ddd",
+                backgroundColor:
+                  selected === "netbanking" ? "rgba(255,106,0,0.08)" : "#fff",
               }}
             >
               <Box className="d-flex align-items-center gap-2">
@@ -127,7 +129,10 @@ const PaymentOption = ({ onConfirm }) => {
             <Box
               className="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
               sx={{
-                border: selected === "wallet" ? "2px solid #FF6A00" : "1px solid #ddd",
+                border:
+                  selected === "wallet"
+                    ? "2px solid #FF6A00"
+                    : "1px solid #ddd",
                 backgroundColor:
                   selected === "wallet" ? "rgba(255,106,0,0.08)" : "#fff",
               }}
@@ -149,7 +154,8 @@ const PaymentOption = ({ onConfirm }) => {
             <Box
               className="d-flex align-items-center justify-content-between p-3 mb-2 rounded"
               sx={{
-                border: selected === "cod" ? "2px solid #FF6A00" : "1px solid #ddd",
+                border:
+                  selected === "cod" ? "2px solid #FF6A00" : "1px solid #ddd",
                 backgroundColor:
                   selected === "cod" ? "rgba(255,106,0,0.08)" : "#fff",
               }}

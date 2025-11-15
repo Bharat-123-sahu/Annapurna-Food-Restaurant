@@ -23,7 +23,7 @@ OrderRouter.put("/cancel/:id", userVerification, cancelOrder); // Cancel order
 OrderRouter.put("/delete/:id", userVerification, deleteOrder); // Cancel order
 
 // ---------- Admin Routes ----------
-OrderRouter.get("/all-orders", userVerification, isAdmin, getAllOrders); // Get all orders (admin)
+OrderRouter.get("/all-orders", userVerification, getAllOrders); // Get all orders (admin)
 OrderRouter.put(
   "/status/:id",
   userVerification,

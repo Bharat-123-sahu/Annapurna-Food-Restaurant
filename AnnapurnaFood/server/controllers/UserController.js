@@ -21,7 +21,6 @@ const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_KEY, { expiresIn: "3d" });
 };
 
-
 /**
  * User Signup / Register
  */
@@ -30,7 +29,9 @@ export const registerUser = async (req, res) => {
     const { name, email, password, phone, address } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "Name, Email, and Password are required" });
+      return res
+        .status(400)
+        .json({ message: "Name, Email, and Password are required" });
     }
 
     const existingUser = await UserModel.findOne({ email });
@@ -48,19 +49,18 @@ export const registerUser = async (req, res) => {
       address,
     });
 
-    const token = createToken(user._id);
+    // const token = createToken(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false, // change to true in production with HTTPS
-      sameSite: "lax",
-      maxAge: 3 * 24 * 60 * 60 * 1000,
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: false, // change to true in production with HTTPS
+    //   sameSite: "lax",
+    //   maxAge: 3 * 24 * 60 * 60 * 1000,
+    // });
 
     res.status(201).json({
       message: "User registered successfully",
       user: { id: user._id, name: user.name, email: user.email },
-      token,
     });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -76,13 +76,16 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password)
-      return res.status(400).json({ message: "Email and Password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and Password are required" });
 
     const user = await UserModel.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(401).json({ message: "Invalid credentials" });
 
     const token = createToken(user._id);
 
@@ -94,6 +97,7 @@ export const loginUser = async (req, res) => {
     });
 
     res.status(200).json({
+      success: true,
       message: "User login successful",
       user: { id: user._id, name: user.name, email: user.email },
       token,
@@ -137,11 +141,13 @@ export const getUserProfile = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Return all fields except password
-    const { password, ...userData } = user._doc; 
+    const { password, ...userData } = user._doc;
     res.status(200).json({ user: userData });
   } catch (error) {
     console.error("Error fetching user profile:", error);
-    res.status(500).json({ message: "Server error while fetching user profile" });
+    res
+      .status(500)
+      .json({ message: "Server error while fetching user profile" });
   }
 };
 
@@ -186,7 +192,8 @@ export const changePassword = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Old password is incorrect" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Old password is incorrect" });
 
     user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
@@ -211,14 +218,13 @@ export const getAllUsers = async (req, res) => {
   }
 };
 //Delete user account
-export const deleteUserAccount=async(req,res)=>{
-  try{
-  const {id}=req.params;
- await UserModel.findByIdAndDelete(id);
-  alert("conform delete");
-  res.status(200).json({"message":"user delete successful"})
-  }
-  catch(err){
+export const deleteUserAccount = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await UserModel.findByIdAndDelete(id);
+    alert("conform delete");
+    res.status(200).json({ message: "user delete successful" });
+  } catch (err) {
     console.error(err);
   }
-}
+};

@@ -21,7 +21,7 @@ FoodRouter.get("/", getAllFood);
 FoodRouter.get("/:id", getFoodById);
 FoodRouter.get("/:category", getFoodByCategory);
 FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
-FoodRouter.put("/update/available", updateFoodAvailability);
+FoodRouter.put("/update/available",RestaurantVerification, updateFoodAvailability);
 
 // ---------- Admin Routes ----------
 FoodRouter.post("/add/:id", RestaurantVerification , addFood);

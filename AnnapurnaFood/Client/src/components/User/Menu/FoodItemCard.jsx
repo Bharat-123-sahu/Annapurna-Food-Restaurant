@@ -1,10 +1,20 @@
 // components/user/Menu/FoodItemsCard.jsx
+// src/components/user/Menu/FoodItemsCard.jsx
 import React from "react";
 import { Card, CardContent, Typography, Rating } from "@mui/material";
 import AddToCartButton from "./AddToCartButton";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const FoodItemsCard = ({ food }) => {
+  //
+  if (!food) {
+    return (
+      <div className="text-center text-muted py-3">
+        <p>Food item not available.</p>
+      </div>
+    );
+  }
+
   return (
     <Card
       className="shadow-sm border-0 food-card"
@@ -18,24 +28,30 @@ const FoodItemsCard = ({ food }) => {
         },
       }}
     >
-      {/* Image Section */}
+      {/* ✅ Image Section with Fallback */}
       <div style={{ height: "160px", overflow: "hidden" }}>
         <img
-          src= "assets/images/hero-bg.jpg" //{food.image}
-          alt= "burger" //{food.name}
-          className="w-20 h-100"
+          src={
+            food?.image ||
+            "https://plus.unsplash.com/premium_photo-1675252369719-dd52bc69c3df?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600"
+          }
+          alt={food?.name || "Food"}
+          className="w-100 h-100"
           style={{
             objectFit: "cover",
             transition: "transform 0.4s ease",
           }}
+          onError={(e) => {
+            e.target.src =
+              "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600";
+          }}
         />
       </div>
 
-      {/* Content Section */}
+      {/* ✅ Content Section */}
       <CardContent sx={{ p: 2 }}>
         <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-          {/* //{food.name} */}
-          Burger
+          {food?.name || "Unknown Dish"}
         </Typography>
 
         <Typography
@@ -48,21 +64,32 @@ const FoodItemsCard = ({ food }) => {
             textOverflow: "ellipsis",
           }}
         >
-          {/* {food.description ||*/ "Delicious and freshly prepared."} 
+          {food?.description || "Delicious and freshly prepared."}
         </Typography>
 
         <div className="d-flex justify-content-between align-items-center mb-2">
-          <Typography variant="subtitle1" sx={{ color: "#FF6A00", fontWeight: 600 }}>
-            {/* ₹{food.price} */}100
+          <Typography
+            variant="subtitle1"
+            sx={{ color: "#FF6A00", fontWeight: 600 }}
+          >
+            ₹{food?.price ?? "N/A"}
           </Typography>
 
-          <Rating value={/*food.rating ||*/ 4.5} precision={0.1} readOnly size="small" />
+          <Rating
+            value={food?.rating || 4.5}
+            precision={0.1}
+            readOnly
+            size="small"
+          />
         </div>
 
-        {/* Add To Cart Button */}
+        {/* ✅ Add To Cart Button */}
         <AddToCartButton
-          onAdd={(count) => console.log(`${food.name} added, count: ${count}`)}
-          onRemove={(count) => console.log(`${food.name} removed, count: ${count}`)}
+          food={food}
+          onAdd={(count) => console.log(`${food?.name} added, count: ${count}`)}
+          onRemove={(count) =>
+            console.log(`${food?.name} removed, count: ${count}`)
+          }
         />
       </CardContent>
     </Card>

@@ -50,7 +50,7 @@ export const addFood = async (req, res) => {
 export const getAllFood = async (req, res) => {
   try {
     const foods = await FoodModel.find().populate("restaurant");
-    res.json(foods);
+    res.json({foods});
   } catch (error) {
     res.status(500).json({ message: "Error fetching foods", error });
   }
@@ -64,7 +64,7 @@ export const getFoodById = async (req, res) => {
 
     if (!food) return res.status(404).json({ message: "Food not found" });
 
-    res.json(food);
+    res.json({food});
   } catch (error) {
     res.status(500).json({ message: "Error fetching food", error });
   }
@@ -117,7 +117,7 @@ export const getFoodByCategory = async (req, res) => {
     const { category } = req.params;
     const foods = await FoodModel.find({ category }).populate("restaurant");
 
-    res.json(foods);
+    res.json({foods});
   } catch (error) {
     res.status(500).json({ message: "Error fetching foods by category", error });
   }
@@ -131,7 +131,7 @@ export const getFoodByRestaurant = async (req, res) => {
       "restaurant"
     );
 
-    res.json(foods);
+    res.json({foods});
   } catch (error) {
     res.status(500).json({ message: "Error fetching foods by restaurant", error });
   }

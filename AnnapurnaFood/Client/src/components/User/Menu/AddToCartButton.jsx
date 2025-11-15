@@ -1,34 +1,59 @@
 // components/user/Menu/AddToCartButton.jsx
-import React, { useState } from "react";
-import { Button, IconButton, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+// src/components/user/Menu/AddToCartButton.jsx
+import React, { useState, useContext } from "react";
+import { /* Button,*/ Box } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import QuantitySelector from "./QuantitySelector";
+import { CartContext } from "../../../context/cartcontext";
+import Button from "../../common/Button";
 
 const AddToCartButton = ({
+  food, // 👈 make sure to pass this from FoodItemsCard
   onAdd,
   onRemove,
   initialCount = 0,
-  size = "medium",
+  sizee = "medium",
   styleType = "primary",
+  responsive=true,
 }) => {
+  // ✅ Access backend functions
+  const { addToCart, updateQuantity, removeItem } = useContext(CartContext);
+
+  // ✅ Local state for UI
   const [count, setCount] = useState(initialCount);
+  const [isAdded, setIsAdded] = useState(initialCount > 0);
 
-  const handleAdd = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    if (onAdd) onAdd(newCount);
-  };
-
-  const handleRemove = () => {
-    if (count > 0) {
-      const newCount = count - 1;
-      setCount(newCount);
-      if (onRemove) onRemove(newCount);
+  // ✅ Add first time to cart
+  const handleAddToCart = async () => {
+    try {
+      await addToCart(food._id, 1); // POST /cart/add
+      setCount(1);
+      setIsAdded(true);
+      if (onAdd) onAdd(1);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
     }
   };
 
-  // Custom colors
+  // ✅ Quantity changed via QuantitySelector
+  const handleQuantityChange = async (newQty) => {
+    try {
+      if (newQty === 0) {
+        await removeItem(food._id); // DELETE /cart/removeitem/:id
+        setIsAdded(false);
+        setCount(0);
+        if (onRemove) onRemove(0);
+      } else {
+        await updateQuantity(food._id, newQty); // PUT /cart/updateqty/:id
+        setCount(newQty);
+        if (onAdd) onAdd(newQty);
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
+  // ✅ Custom button colors
   const colors =
     styleType === "primary"
       ? {
@@ -43,12 +68,15 @@ const AddToCartButton = ({
         };
 
   return (
-    <div className="d-flex justify-content-center align-items-center gap-2">
-      {/* When no item is added */}
-      {count === 0 ? (
+    <Box className="d-flex justify-content-center align-items-center">
+      {/* When food is NOT added to cart */}
+      {!isAdded ? (
         <Button
-          onClick={handleAdd}
-          size={size}
+          text="Add to cart"
+          classNamee={responsive ? "btn-responsive" : ""}
+          // fullWidth={fullWidth}
+          onClickk={handleAddToCart}
+          sizee={sizee}
           startIcon={<ShoppingCartIcon />}
           sx={{
             backgroundColor: colors.bg,
@@ -59,37 +87,21 @@ const AddToCartButton = ({
             fontWeight: 600,
             textTransform: "none",
             boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-            "&:hover": {
-              backgroundColor: colors.hover,
-            },
+            "&:hover": { backgroundColor: colors.hover },
           }}
-        >
-          Add to Cart
-        </Button>
+        ></Button>
       ) : (
-        // When item is added
-        <div
-          className="d-flex align-items-center justify-content-center px-3 py-1 rounded-pill"
-          style={{
-            backgroundColor: "#fff",
-            border: "2px solid #FF6A00",
-            color: "#FF6A00",
-            fontWeight: 600,
-            boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-          }}
-        >
-          <IconButton size="small" onClick={handleRemove} sx={{ color: "#FF6A00" }}>
-            <RemoveIcon fontSize="small" />
-          </IconButton>
-          <Typography variant="body1" sx={{ mx: 1, fontWeight: 600 }}>
-            {count}
-          </Typography>
-          <IconButton size="small" onClick={handleAdd} sx={{ color: "#FF6A00" }}>
-            <AddIcon fontSize="small" />
-          </IconButton>
-        </div>
+        // ✅ When added — show QuantitySelector component
+        <QuantitySelector
+          quantity={count}
+          min={0}
+          max={10}
+          onChange={handleQuantityChange}
+          color="#FF6A00"
+          size="medium"
+        />
       )}
-    </div>
+    </Box>
   );
 };
 

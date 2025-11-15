@@ -15,7 +15,7 @@ app.use(express.json());
 config();
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -23,7 +23,7 @@ app.use("/admin", AdminRouter);
 app.use("/cart", CartRouter);
 app.use("/order", OrderRouter);
 app.use("/food", FoodRouter);
-app.use("/restaurent", RestaurentRouter);
+app.use("/rastaurant", RestaurentRouter);
 app.use("/review", ReviewRouter);
 app.use("/user", UserRouter);
 

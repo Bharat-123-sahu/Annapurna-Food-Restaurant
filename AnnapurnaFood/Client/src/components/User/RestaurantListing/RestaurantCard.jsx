@@ -1,113 +1,116 @@
 // components/user/RestaurantListing/RestaurantCards.jsx
-import React from "react";
-import { Card, CardContent, CardActions, Typography, Rating, Button, Box } from "@mui/material";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios"; // ✅ Don't forget this import
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Rating,
+  Button,
+  Box,
+} from "@mui/material";
 
-const RestaurantCards = ({ restaurants = [] }) => {
-  if (!restaurants.length) {
-    return (
-      <div className="text-center py-5">
-        <Typography variant="h6" sx={{ color: "#777" }}>
-          No restaurants found 🍽️
-        </Typography>
-      </div>
-    );
-  }
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
+const RestaurantCards = ({ res }) => {
+ 
+  
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/restaurantdetail/${res._id}`, { state: { restaurant: res } });
+    // console.log("click")
+  };
+  
   return (
-    <div className="container">
-      <div className="row g-4">
-        {restaurants.map((res, index) => (
-          <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <Card
-              className="shadow-sm border-0 restaurant-card"
-              sx={{
-                borderRadius: "16px",
-                overflow: "hidden",
-                cursor: "pointer",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                '&:hover': {
-                  transform: "translateY(-6px)",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-                },
-              }}
-            >
-              {/* Restaurant Image */}
-              <Box sx={{ height: 180, overflow: "hidden" }}>
-                <img
-                  src={res.image}
-                  alt={res.name}
-                  className="w-100 h-100"
-                  style={{
-                    objectFit: "cover",
-                    transition: "transform 0.4s ease",
-                  }}
-                />
-              </Box>
+    <Card
+      className="shadow-sm border-0 restaurant-card"
+      sx={{
+        borderRadius: "16px",
+        overflow: "hidden",
+        cursor: "pointer",
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        "&:hover": {
+          transform: "translateY(-6px)",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+        },
+      }}
+    >
+      <Box sx={{ height: 180, overflow: "hidden" }}>
+        <img
+          src={
+            res?.image ||
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600"
+          }
+          alt={res?.name}
+          className="w-100 h-100"
+          style={{
+            objectFit: "cover",
+            transition: "transform 0.4s ease",
+          }}
+        />
+      </Box>
 
-              {/* Content */}
-              <CardContent sx={{ p: 2 }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {res.name}
-                </Typography>
+      <CardContent sx={{ p: 2 }}>
+        <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
+          {res?.name}
+        </Typography>
 
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "gray",
-                    mb: 1,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {res.cuisine || "Various Cuisines"}
-                </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            color: "gray",
+            mb: 1,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {res?.cuisine || "Various Cuisines"}
+        </Typography>
 
-                <div className="d-flex justify-content-between align-items-center">
-                  <Rating
-                    name="read-only"
-                    value={res.rating || 4}
-                    precision={0.1}
-                    readOnly
-                    size="small"
-                  />
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      fontWeight: 500,
-                      color: "#FF6A00",
-                    }}
-                  >
-                    {res.deliveryTime || "30 mins"}
-                  </Typography>
-                </div>
-              </CardContent>
+        <div className="d-flex justify-content-between align-items-center">
+          <Rating
+            name="read-only"
+            value={res?.rating || 4}
+            precision={0.1}
+            readOnly
+            size="small"
+          />
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 500,
+              color: "#FF6A00",
+            }}
+          >
+            {res.deliveryTime || "30 mins"}
+          </Typography>
+        </div>
+      </CardContent>
 
-              {/* Button */}
-              <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#FF6A00",
-                    color: "#fff",
-                    fontWeight: 600,
-                    borderRadius: "50px",
-                    px: 3,
-                    textTransform: "none",
-                    '&:hover': {
-                      backgroundColor: "#EE0979",
-                    },
-                  }}
-                >
-                  Order Now
-                </Button>
-              </CardActions>
-            </Card>
-          </div>
-        ))}
-      </div>
-    </div>
+      <CardActions sx={{ justifyContent: "center", pb: 2 }}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#FF6A00",
+            color: "#fff",
+            fontWeight: 600,
+            borderRadius: "50px",
+            px: 3,
+            textTransform: "none",
+            "&:hover": {
+              backgroundColor: "#EE0979",
+            },
+          }}
+          onClick={handleClick}
+        >
+          Detail
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 

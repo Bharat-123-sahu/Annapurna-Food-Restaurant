@@ -3,7 +3,12 @@ import React from "react";
 import { Card, CardContent, Typography, Divider, Button } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const OrderSummary = ({ subtotal = 0, taxRate = 0.05, deliveryCharge = 30, onPlaceOrder }) => {
+const OrderSummary = ({
+  subtotal = 0,
+  taxRate = 0.05,
+  deliveryCharge = 30,
+  onPlaceOrder,
+}) => {
   const taxAmount = subtotal * taxRate;
   const total = subtotal + taxAmount + deliveryCharge;
 
@@ -174,4 +179,3 @@ export default OrderSummary;
 // };
 
 // export default CartPage;
-

@@ -111,13 +111,20 @@ const ForgetPassword = ({ onBack, onSubmit }) => {
                   }}
                   disabled={loading}
                 >
-                  {loading ? <CircularProgress size={24} color="inherit" /> : "Send Reset Link"}
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Send Reset Link"
+                  )}
                 </Button>
               </form>
             </>
           ) : (
             <div className="text-center">
-              <Typography variant="h6" sx={{ color: "#00C853", fontWeight: 700, mt: 2 }}>
+              <Typography
+                variant="h6"
+                sx={{ color: "#00C853", fontWeight: 700, mt: 2 }}
+              >
                 ✅ Email Sent Successfully!
               </Typography>
               <Typography variant="body2" sx={{ color: "gray", mt: 1 }}>
@@ -147,7 +154,6 @@ const ForgetPassword = ({ onBack, onSubmit }) => {
 };
 
 export default ForgetPassword;
-
 
 // import React, { useState } from "react";
 // import AuthForm from "./AuthForm";

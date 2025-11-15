@@ -8,14 +8,16 @@ import PopularRestaurants from "../../components/User/Home/PopularRestaurants";
 import TestiMonials from "../../components/User/Home/Testimonials";
 
 export const HomePage = () => {
-  return <>
-  <Navbar/>
-  <HeroSection/>
-  <CategoryList/>
-  <PopularRestaurants/>
-  <PopularFood/>
-  <TestiMonials/>
-  <NewsLetters/>
-  <Footer/>
-  </>;
+  return (
+    <>
+      <Navbar />
+      <HeroSection />
+      {/* <CategoryList /> */}
+      <PopularRestaurants />
+      <PopularFood />
+      <TestiMonials />
+      <NewsLetters />
+      <Footer />
+    </>
+  );
 };

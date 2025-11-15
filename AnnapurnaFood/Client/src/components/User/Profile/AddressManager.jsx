@@ -82,9 +82,7 @@ const AddressManager = () => {
   };
 
   const handleSetDefault = (id) => {
-    setAddresses((prev) =>
-      prev.map((a) => ({ ...a, isDefault: a.id === id }))
-    );
+    setAddresses((prev) => prev.map((a) => ({ ...a, isDefault: a.id === id })));
   };
 
   const getAddressIcon = (type) => {
@@ -281,4 +279,3 @@ const AddressManager = () => {
 };
 
 export default AddressManager;
-

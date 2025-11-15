@@ -21,12 +21,28 @@ export const createtoken = (id) => {
 
 export const addRestaurant = async (req, res) => {
   try {
-    const { name, password, email, address, phone, image, openingHours } =
-      req.body;
+    const {
+      name,
+      password,
+      email,
+      address,
+      phone,
+      image,
+      openingHours,
+      cuisine,
+    } = req.body;
 
     const ownerId = req.user._id;
 
-    if (!name || !password || !email || !address || !phone || !ownerId) {
+    if (
+      !name ||
+      !password ||
+      !email ||
+      !address ||
+      !phone ||
+      !ownerId ||
+      !cuisine
+    ) {
       return res
         .status(400)
         .json({ message: "All required fields must be filled!" });
@@ -42,6 +58,7 @@ export const addRestaurant = async (req, res) => {
       openingHours,
       ownerId: ownerId,
       password: hashpassword,
+      cuisine,
     });
 
     res
@@ -115,7 +132,7 @@ export const getAllRestaurants = async (req, res) => {
 export const getRestaurantById = async (req, res) => {
   try {
     const { id } = req.params;
-    const restaurant = await RestaurantModel.findById(id);
+    const restaurant = await RestaurentModel.findById(id);
 
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });

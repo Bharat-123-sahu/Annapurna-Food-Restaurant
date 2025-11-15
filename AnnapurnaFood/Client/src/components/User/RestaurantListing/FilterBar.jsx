@@ -1,4 +1,5 @@
 // components/user/RestaurantListing/FilterBar.jsx
+// components/user/RestaurantListing/FilterBar.jsx
 import React, { useState } from "react";
 import {
   TextField,
@@ -7,7 +8,6 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Typography,
 } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,9 +17,17 @@ const FilterBar = ({ onFilter }) => {
   const [rating, setRating] = useState("");
   const [sortBy, setSortBy] = useState("");
 
-  // Example cuisine options — can be fetched from API
-  const cuisineOptions = ["All", "Indian", "Chinese", "Italian", "Fast Food", "Desserts"];
+  // Example cuisine options — you can fetch from API too
+  const cuisineOptions = [
+    "All",
+    "Indian",
+    "Chinese",
+    "Italian",
+    "Fast Food",
+    "Desserts",
+  ];
 
+  // ✅ Send filters to parent (RestaurantListing)
   const handleFilter = () => {
     onFilter({
       search,
@@ -29,6 +37,7 @@ const FilterBar = ({ onFilter }) => {
     });
   };
 
+  // ✅ Reset filters
   const handleReset = () => {
     setSearch("");
     setCuisine("");
@@ -64,7 +73,11 @@ const FilterBar = ({ onFilter }) => {
 
           {/* Cuisine Filter */}
           <div className="col-6 col-md-3">
-            <FormControl fullWidth size="small" sx={{ backgroundColor: "#fff", borderRadius: "8px" }}>
+            <FormControl
+              fullWidth
+              size="small"
+              sx={{ backgroundColor: "#fff", borderRadius: "8px" }}
+            >
               <InputLabel>Cuisine</InputLabel>
               <Select
                 value={cuisine}
@@ -82,7 +95,11 @@ const FilterBar = ({ onFilter }) => {
 
           {/* Rating Filter */}
           <div className="col-6 col-md-2">
-            <FormControl fullWidth size="small" sx={{ backgroundColor: "#fff", borderRadius: "8px" }}>
+            <FormControl
+              fullWidth
+              size="small"
+              sx={{ backgroundColor: "#fff", borderRadius: "8px" }}
+            >
               <InputLabel>Rating</InputLabel>
               <Select
                 value={rating}
@@ -99,7 +116,11 @@ const FilterBar = ({ onFilter }) => {
 
           {/* Sort By */}
           <div className="col-6 col-md-2">
-            <FormControl fullWidth size="small" sx={{ backgroundColor: "#fff", borderRadius: "8px" }}>
+            <FormControl
+              fullWidth
+              size="small"
+              sx={{ backgroundColor: "#fff", borderRadius: "8px" }}
+            >
               <InputLabel>Sort By</InputLabel>
               <Select
                 value={sortBy}
@@ -152,6 +173,7 @@ const FilterBar = ({ onFilter }) => {
 };
 
 export default FilterBar;
+
 
 // import React from "react";
 // import FilterBar from "./FilterBar";

@@ -1,12 +1,6 @@
 // components/user/Orders/ErrorMessage.jsx
 import React from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
+import { Card, CardContent, Typography, Button, Box } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ReplayIcon from "@mui/icons-material/Replay";
 import HomeIcon from "@mui/icons-material/Home";
@@ -112,9 +106,7 @@ const ErrorMessage = ({
                 px: 3,
                 "&:hover": { backgroundColor: "rgba(255,106,0,0.1)" },
               }}
-              onClick={
-                onGoHome || (() => (window.location.href = "/"))
-              }
+              onClick={onGoHome || (() => (window.location.href = "/"))}
             >
               Go to Home
             </Button>

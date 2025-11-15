@@ -4,6 +4,7 @@ export const restaurentSchema = new mongoose.Schema({
   ownerName: String,
   email: String,
   phone: String,
+  cuisine:String,
   address: {
     street: String,
     city: String,

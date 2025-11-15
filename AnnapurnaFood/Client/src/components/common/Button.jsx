@@ -4,22 +4,25 @@ import Button from "@mui/material/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const CustomButton = ({
-  text = "click",
-  color = "primary",
-  variant = "contained",
-  size = "medium",
-  onClick,
+  text,
+ sizee,
+ color,
+ startIcon,
+  onClickk,
   fullWidth = false,
-  responsive = true, // for Bootstrap responsiveness
+  classNamee,
+  // responsive = true, // for Bootstrap responsiveness
 }) => {
   return (
     <Button
+    text={text}
       color={color}
-      variant={variant}
-      size={size}
-      onClick={onClick}
-      className={responsive ? "btn-responsive" : ""}
+      variant
+      size={sizee}
+      onClick={onClickk}
+      className={classNamee}
       fullWidth={fullWidth}
+      startIcon={startIcon}
       sx={{
         borderRadius: "12px",
         textTransform: "capitalize",

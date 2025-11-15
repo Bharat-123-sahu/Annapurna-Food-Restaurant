@@ -1,4 +1,4 @@
-// NewsLetters.jsx
+// NewsLetters.jsx//working on nodemailer ungently
 import React, { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
