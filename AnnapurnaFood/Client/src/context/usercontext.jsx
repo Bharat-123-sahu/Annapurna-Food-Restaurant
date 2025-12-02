@@ -73,7 +73,7 @@ export const UserProvider = ({ children }) => {
   const fetchUserProfile = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await api.get("/user/profile", { withCredentials: true });
+      const res = await api.get("/user/profile"); //withCredential=true
       if (res?.data?.user) {
         setUser(res.data.user);
         setIsAuthenticated(true);

@@ -22,7 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const OrderTable = () => {
+export const OrderTable = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const open = Boolean(anchorEl);
@@ -111,13 +111,27 @@ const OrderTable = () => {
         <Table>
           <TableHead sx={{ backgroundColor: "#FF6A00" }}>
             <TableRow>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Order ID</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Customer</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Total (₹)</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Payment</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Status</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Date</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600, textAlign: "center" }}>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Order ID
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Customer
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Total (₹)
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Payment
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Status
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Date
+              </TableCell>
+              <TableCell
+                sx={{ color: "#fff", fontWeight: 600, textAlign: "center" }}
+              >
                 Actions
               </TableCell>
             </TableRow>
@@ -191,8 +205,6 @@ const OrderTable = () => {
     </div>
   );
 };
-
-export default OrderTable;
 
 // import React from "react";
 // import Sidebar from "../DashboardCommon/Sidebar";

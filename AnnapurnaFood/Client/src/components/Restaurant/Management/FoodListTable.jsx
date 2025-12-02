@@ -1,5 +1,5 @@
 // components/restaurant/Management/FoodList.jsx
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   TableHead,
@@ -21,48 +21,28 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const FoodList = () => {
+import { useNavigate } from "react-router-dom";
+import { FoodContext } from "../../../context/Foodcontext";
+export const FoodList = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const { fetchFoodByRestaurant, loading, foods } = useContext(FoodContext);
 
-  const [foods, setFoods] = useState([
-    {
-      id: 1,
-      name: "Paneer Butter Masala",
-      image:
-        "https://images.unsplash.com/photo-1601050690597-31c4b43e4d07?auto=format&fit=crop&w=800&q=80",
-      category: "North Indian",
-      price: 220,
-      available: true,
-    },
-    {
-      id: 2,
-      name: "Margherita Pizza",
-      image:
-        "https://images.unsplash.com/photo-1601924582971-b8d3da0b336f?auto=format&fit=crop&w=800&q=80",
-      category: "Italian",
-      price: 350,
-      available: true,
-    },
-    {
-      id: 3,
-      name: "Veg Fried Rice",
-      image:
-        "https://images.unsplash.com/photo-1633140846760-8a9f8b77cc42?auto=format&fit=crop&w=800&q=80",
-      category: "Chinese",
-      price: 180,
-      available: false,
-    },
-  ]);
-
+  const id = localStorage.getItem("restarantId");
+  useEffect(() => {
+    if (id) {
+      fetchFoodByRestaurant(id);
+    }
+  });
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item? ❌")) {
       setFoods(foods.filter((item) => item.id !== id));
     }
   };
 
-  const handleEdit = (id) => {
-    alert(`Editing food item ID: ${id}`);
+  const handleEdit = (food) => {
+    console.log("food data :", food);
+    navigate("/dashboard/edit-food", { state: { update: food } });
   };
 
   const handleAdd = () => {
@@ -74,7 +54,7 @@ const FoodList = () => {
   );
 
   return (
-    <div className="container my-5">
+    <div className="container m-5">
       {/* Header */}
       <Box
         className="d-flex justify-content-between align-items-center mb-4"
@@ -132,12 +112,24 @@ const FoodList = () => {
         <Table>
           <TableHead sx={{ backgroundColor: "#FF6A00" }}>
             <TableRow>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Image</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Name</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Category</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Price (₹)</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Status</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Actions</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Image
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Name
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Category
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Price (₹)
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Status
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -154,7 +146,7 @@ const FoodList = () => {
                 >
                   <TableCell>
                     <img
-                      src={food.image}
+                      src={`http://localhost:2000/upload/${food.image}`}
                       alt={food.name}
                       style={{
                         width: 60,
@@ -171,12 +163,12 @@ const FoodList = () => {
 
                   <TableCell>
                     <Chip
-                      label={food.available ? "Available" : "Unavailable"}
+                      label={food.isAvailable ? "Available" : "Unavailable"}
                       sx={{
-                        backgroundColor: food.available
+                        backgroundColor: food.isAvailable
                           ? "rgba(76,175,80,0.1)"
                           : "rgba(244,67,54,0.1)",
-                        color: food.available ? "#4CAF50" : "#F44336",
+                        color: food.isAvailable ? "#4CAF50" : "#F44336",
                         fontWeight: 600,
                       }}
                     />
@@ -184,7 +176,7 @@ const FoodList = () => {
 
                   <TableCell>
                     <IconButton
-                      onClick={() => handleEdit(food.id)}
+                      onClick={() => handleEdit(food)}
                       sx={{ color: "#FF6A00" }}
                     >
                       <EditIcon />
@@ -213,8 +205,6 @@ const FoodList = () => {
     </div>
   );
 };
-
-export default FoodList;
 
 // import React from "react";
 // import Sidebar from "../DashboardCommon/Sidebar";

@@ -10,6 +10,7 @@ import FoodRouter from "./routes/FoodRoutes.js";
 import RestaurentRouter from "./routes/RestaurentRoutes.js";
 import ReviewRouter from "./routes/ReviewRoutes.js";
 import UserRouter from "./routes/UserRoutes.js";
+import { Nodemail } from "./routes/nodemial.js";
 const app = express();
 app.use(express.json());
 config();
@@ -19,6 +20,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use("/admin", AdminRouter);
 app.use("/cart", CartRouter);
 app.use("/order", OrderRouter);
@@ -26,6 +28,8 @@ app.use("/food", FoodRouter);
 app.use("/rastaurant", RestaurentRouter);
 app.use("/review", ReviewRouter);
 app.use("/user", UserRouter);
+app.use("/mail", Nodemail);
+app.use("/upload", express.static("uploads"));
 
 app.listen(process.env.PORT, () => {
   console.log(`app runntin on this port ${process.env.PORT} `);

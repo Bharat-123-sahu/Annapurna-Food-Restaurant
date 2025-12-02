@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { AdminModel } from "../models/Adminmodel.js"; // <-- MODEL KO BADLEIN!
+import { UserModel } from "../models/Usermodel.js"; // <-- MODEL KO BADLEIN!
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -22,7 +22,7 @@ export const userVerification = async (req, res, next) => {
 
       // 4. Token ki ID se ADMIN ko dhoondhein (UserModel ko nahi)
       //    aur password hide kar dein
-      req.user = await AdminModel.findById(decoded.id).select("-password");
+      req.user = await UserModel.findById(decoded.id).select("-password");
 
       if (!req.user) {
         return res

@@ -16,54 +16,54 @@ import bcrypt from "bcryptjs";
 // getFoodsByRestaurant
 
 export const createtoken = (id) => {
-  return jwt.sign({ id }, process.env.TOKEN_KEY, { expiresIn: "3d" });
+  return jwt.sign({ id }, process.env.TOKEN_KEY, { expiresIn: "1d" });
 };
 
 export const addRestaurant = async (req, res) => {
   try {
     const {
       name,
-      password,
+      ownerName,
       email,
-      address,
       phone,
-      image,
-      openingHours,
       cuisine,
+      street,
+      city,
+      state,
+      postalCode,
+      password,
+      isOpen,
     } = req.body;
 
-    const ownerId = req.user._id;
-
-    if (
-      !name ||
-      !password ||
-      !email ||
-      !address ||
-      !phone ||
-      !ownerId ||
-      !cuisine
-    ) {
+    if (!name || !password || !email || !phone || !cuisine) {
       return res
         .status(400)
         .json({ message: "All required fields must be filled!" });
+    }
+    const exist = await RestaurentModel.findOne({ email });
+    if (exist) {
+      res.status(300).json({
+        message: "user is already register please register another email",
+      });
     }
     const hashpassword = await bcrypt.hash(password, 10);
 
     const restaurant = await RestaurentModel.create({
       name,
+      ownerName,
       email,
-      address,
       phone,
-      image,
-      openingHours,
-      ownerId: ownerId,
-      password: hashpassword,
       cuisine,
+      address: { street, city, state, postalCode },
+      password: hashpassword,
+      isOpen,
+      logo: req.file ? req.file.filename : null,
     });
 
     res
       .status(201)
       .json({ message: "Restaurant added successfully", restaurant });
+    console.log(password);
   } catch (error) {
     console.error("Error adding restaurant:", error);
     res.status(500).json({ message: "Server Error while adding restaurant" });
@@ -79,15 +79,13 @@ export const loginRestaurent = async (req, res) => {
 
     // Find the user by email
     const user = await RestaurentModel.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
-    }
 
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
-    }
+    if (!user) return res.status(400).json({ message: "Invalid email" });
+
+    const pass = await bcrypt.compare(password, user.password);
+    console.log("Password match:", pass);
+
+    if (!pass) return res.status(400).json({ message: "Invalid  password" });
 
     // Create JWT token
     const token = createtoken(user._id); // Make sure you use user._id
@@ -95,9 +93,9 @@ export const loginRestaurent = async (req, res) => {
     // Send cookie and response
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // Only send over HTTPS
-      sameSite: "none",
-      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+      secure: false, // Only send over HTTPS//change while hosting
+      // 3 days
+      sameSite: "lax",
     });
 
     return res.json({
@@ -107,6 +105,7 @@ export const loginRestaurent = async (req, res) => {
         name: user.name,
         email: user.email,
         id: user._id, // corrected id field
+        logo: user.logo,
       },
     });
   } catch (err) {
@@ -217,3 +216,13 @@ export const getFoodsByRestaurant = async (req, res) => {
     res.status(500).json({ message: "Server Error while fetching foods" });
   }
 };
+export const logoutReastaurant = (req, res) => {
+  try {
+    res
+      .clearCookie("token")
+      .json({ message: "reastaurant logged out successfully" });
+  } catch (err) {
+    res.status(400).json({ message: "err while logout " });
+  }
+};
+// 🔟 get all users

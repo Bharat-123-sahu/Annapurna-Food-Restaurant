@@ -19,8 +19,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CancelIcon from "@mui/icons-material/Cancel";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Sidebar from "../DashboardCommon/Sidebar";
 
-const ViewOrder = ({ orderData, onBack, onStatusChange }) => {
+export const ViewOrder = ({ orderData, onBack, onStatusChange }) => {
   const [order, setOrder] = useState(
     orderData || {
       id: "ORD-001",
@@ -172,11 +173,19 @@ const ViewOrder = ({ orderData, onBack, onStatusChange }) => {
         <Table>
           <TableHead sx={{ backgroundColor: "#FF6A00" }}>
             <TableRow>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Item</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Name</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Price (₹)</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Item
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Name
+              </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Price (₹)
+              </TableCell>
               <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Qty</TableCell>
-              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>Total (₹)</TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: 600 }}>
+                Total (₹)
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -264,8 +273,6 @@ const ViewOrder = ({ orderData, onBack, onStatusChange }) => {
     </div>
   );
 };
-
-export default ViewOrder;
 
 // import React, { useState } from "react";
 // import ViewOrder from "./ViewOrder";

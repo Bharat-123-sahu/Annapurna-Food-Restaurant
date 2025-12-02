@@ -1,5 +1,5 @@
 // components/restaurant/Management/EditFood.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Card,
   CardContent,
@@ -9,26 +9,34 @@ import {
   MenuItem,
   FormControlLabel,
   Switch,
-  Box,
   Divider,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FoodContext } from "../../../context/Foodcontext";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+export const EditFood = ({ onBack }) => {
+  let location = useLocation();
+  const update = location.state?.update || {};
+  const { fetchFoodById, foods, updateFood, loading } = useContext(FoodContext);
 
-const EditFood = ({ foodData, onBack, onUpdate }) => {
   const [food, setFood] = useState({
-    name: "",
-    description: "",
-    category: "",
-    price: "",
-    available: true,
-    image: "",
+    name: update.name || "",
+    description: update.description || "",
+    category: update.category || "",
+    price: update.price || "",
+    available: update.available ?? true,
+    id: update._id || null,
   });
-
-  const [preview, setPreview] = useState(null);
-
+  // const [preview, setPreview] = useState(null);
+  // // useEffect(() => {
+  // //   if (food.id) {
+  // //     updateFood(food.id);
+  // //   }
+  // // });
   const categories = [
     "North Indian",
     "South Indian",
@@ -39,35 +47,19 @@ const EditFood = ({ foodData, onBack, onUpdate }) => {
   ];
 
   // Load existing data
-  useEffect(() => {
-    if (foodData) {
-      setFood(foodData);
-      if (foodData.image) setPreview(foodData.image);
-    }
-  }, [foodData]);
 
   const handleChange = (e) => {
     setFood({ ...food, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFood({ ...food, image: file });
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!food.name || !food.category || !food.price) {
-      alert("Please fill in all required fields ⚠️");
-      return;
-    }
-
-    if (onUpdate) onUpdate(food);
-    alert("✅ Food item updated successfully!");
+  
+    updateFood(food.id, food);
   };
+
+  // if (food);
+  // alert("✅ Food item updated successfully!");
 
   return (
     <div className="container my-5">
@@ -172,7 +164,7 @@ const EditFood = ({ foodData, onBack, onUpdate }) => {
             </div>
 
             {/* Image Upload */}
-            <div className="text-center mb-3">
+            {/* <div className="text-center mb-3">
               {preview ? (
                 <img
                   src={preview}
@@ -206,18 +198,22 @@ const EditFood = ({ foodData, onBack, onUpdate }) => {
                 }}
               >
                 Change Image
-                <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
+                <input
+                  type="file"
+                  hidden
+                  name="image"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
               </Button>
-            </div>
+            </div> */}
 
             {/* Availability Switch */}
             <FormControlLabel
               control={
                 <Switch
                   checked={food.available}
-                  onChange={(e) =>
-                    setFood({ ...food, available: e.target.checked })
-                  }
+                  onChange={handleChange}
                   sx={{
                     "& .MuiSwitch-switchBase.Mui-checked": {
                       color: "#FF6A00",
@@ -261,9 +257,6 @@ const EditFood = ({ foodData, onBack, onUpdate }) => {
   );
 };
 
-export default EditFood;
-
-
 // import React, { useState } from "react";
 // import EditFood from "./EditFood";
 // import FoodList from "./FoodList";
@@ -291,9 +284,9 @@ export default EditFood;
 //     <div>
 //       {editMode ? (
 //         <EditFood
-//           foodData={selectedFood}
+//          ={selectedFood}
 //           onBack={() => setEditMode(false)}
-//           onUpdate={handleUpdate}
+//         ={handleUpdate}
 //         />
 //       ) : (
 //         <FoodList />

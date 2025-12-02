@@ -3,19 +3,18 @@ import { RestaurantContext } from "../../../context/restaurantdata";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-import React, { useContext,useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import FilterBar from "./FilterBar";
 
 export const Restaurenadatamap = () => {
   const { restaurants, loading, fetchRestaurants } =
-  useContext(RestaurantContext);
+    useContext(RestaurantContext);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   useEffect(() => {
     fetchRestaurants();
   }, []);
 
   // ✅ Fetch all restaurants when component mounts
- 
 
   // ✅ Whenever restaurants are fetched, set them in filtered list
   useEffect(() => {
@@ -69,7 +68,6 @@ export const Restaurenadatamap = () => {
       </Box>
     );
 
-
   if (loading)
     return (
       <Box
@@ -79,19 +77,19 @@ export const Restaurenadatamap = () => {
         <CircularProgress sx={{ color: "#FF6A00" }} />
       </Box>
     );
-    if (!restaurants || restaurants.length === 0)
-      return (
-    <h5 className="text-center text-muted my-5">
+  if (!restaurants || restaurants.length === 0)
+    return (
+      <h5 className="text-center text-muted my-5">
         No restaurants items available 😞
       </h5>
     );
-    return (
-      <div className="container my-5">
+  return (
+    <div className="container my-5">
       <h3 className="fw-bold mb-4 text-center">Our Restaurat 🍝</h3>
-        <FilterBar onFilter={handleFilter} />
+      <FilterBar onFilter={handleFilter} />
 
       <div className="row g-4">
-       {filteredRestaurants.length > 0 ? (
+        {filteredRestaurants.length > 0 ? (
           filteredRestaurants.map((res) => (
             <div key={res._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
               <RestaurantCards res={res} />

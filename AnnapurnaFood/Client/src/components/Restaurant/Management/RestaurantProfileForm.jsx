@@ -15,8 +15,9 @@ import {
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Sidebar from "../DashboardCommon/Sidebar";
 
-const RestaurantProfileForm = ({ initialData, onSave }) => {
+export const RestaurantProfileForm = ({ initialData, onSave }) => {
   const [profile, setProfile] = useState(
     initialData || {
       name: "Bharat’s Kitchen",
@@ -286,8 +287,6 @@ const RestaurantProfileForm = ({ initialData, onSave }) => {
     </div>
   );
 };
-
-export default RestaurantProfileForm;
 
 // import React from "react";
 // import Sidebar from "../DashboardCommon/Sidebar";

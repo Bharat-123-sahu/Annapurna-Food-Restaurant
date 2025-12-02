@@ -100,7 +100,7 @@ export const FoodProvider = ({ children }) => {
   // ---------- UPDATE FOOD ----------
   const updateFood = async (id, data) => {
     try {
-      const res = await api.put(`/food/update/${id}`, data);
+      const res = await api.patch(`/food/update/${id}`, data);
       const updated = res?.data?.food;
       if (updated) {
         setFoods((prev) => prev.map((f) => (f._id === id ? updated : f)));

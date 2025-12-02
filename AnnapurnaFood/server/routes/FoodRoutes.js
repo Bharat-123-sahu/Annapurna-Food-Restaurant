@@ -1,4 +1,5 @@
 import express from "express";
+import Upload from "../utils/multer.js";
 import {
   addFood,
   getAllFood,
@@ -24,8 +25,8 @@ FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
 FoodRouter.put("/update/available",RestaurantVerification, updateFoodAvailability);
 
 // ---------- Admin Routes ----------
-FoodRouter.post("/add/:id", RestaurantVerification , addFood);
-FoodRouter.put("/update/:id", RestaurantVerification, updateFood);
+FoodRouter.post("/add/:id", RestaurantVerification,Upload.single("image") , addFood);
+FoodRouter.patch("/update/:id", RestaurantVerification, updateFood);
 FoodRouter.delete("/delete/:id",  RestaurantVerification, deleteFood);
 
 export default FoodRouter;

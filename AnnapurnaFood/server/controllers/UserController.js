@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { UserModel } from "../models/Usermodel.js";
+import { MailModel } from "../models/nodemail.js";
 
 dotenv.config();
 
@@ -190,7 +191,9 @@ export const changePassword = async (req, res) => {
 
     const user = await UserModel.findById(decoded.id);
     if (!user) return res.status(404).json({ message: "User not found" });
+    // const verifymail =await MailModel.verifymail(
 
+    // )
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch)
       return res.status(400).json({ message: "Old password is incorrect" });

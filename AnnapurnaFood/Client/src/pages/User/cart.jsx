@@ -10,10 +10,10 @@ export const Cart = () => {
   return (
     <>
       <Navbar />
-      <CartItemCard />
-      {/* <CartMain/> */}
+      {/* <CartItemCard /> */}
+      <CartMain />
       {/* <OrderSummary /> */}
-     
+
       <Footer />
     </>
   );

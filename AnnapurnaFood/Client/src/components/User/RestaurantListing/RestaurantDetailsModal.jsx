@@ -11,6 +11,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FoodContext } from "../../../context/Foodcontext";
 import { useLocation, useParams } from "react-router-dom";
+import AddToCartButton from "../Menu/AddToCartButton";
 
 const RestaurantDetail = () => {
   // ✅ Get restaurant ID from URL
@@ -176,22 +177,13 @@ const RestaurantDetail = () => {
                   </CardContent>
 
                   <CardActions sx={{ justifyContent: "center", pb: 2 }}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#FF6A00",
-                        color: "#fff",
-                        fontWeight: 600,
-                        borderRadius: "50px",
-                        px: 3,
-                        textTransform: "none",
-                        "&:hover": {
-                          backgroundColor: "#EE0979",
-                        },
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
+                    <AddToCartButton
+          food={item}
+          onAdd={(count) => console.log(`${item?.name} added, count: ${count}`)}
+          onRemove={(count) =>
+            console.log(`${item?.name} removed, count: ${count}`)
+          }
+        />
                   </CardActions>
                 </Card>
               </div>

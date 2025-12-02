@@ -1,6 +1,5 @@
 // src/components/user/Menu/MenuSection.jsx
-import React, { useContext, useEffect } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -12,12 +11,30 @@ import CartItemCard from "./CartItemCard";
 // ];
 const CartMain = () => {
   // ✅ Access context values
-  const {fetchCart,cart,loading,total } = useContext(CartContext);
-//insert the total😤
+  const { fetchCart, cart, loading, total } = useContext(CartContext);
+
+  // const [cartitems, setCartItems] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Margherita Pizza",
+  //     price: 249,
+  //     quantity: 2,
+  //     image:
+  //       "https://images.unsplash.com/photo-1601924582975-7e1d99c0a3c4?auto=format&fit=crop&w=800&q=80",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Chicken Burger",
+  //     price: 199,
+  //     quantity: 1,
+  //     image:
+  //       "https://images.unsplash.com/photo-1606755962773-0c8f1d1074bc?auto=format&fit=crop&w=800&q=80",
+  //   },
+  // ]);
+  //insert the total😤
   // // ✅ Fetch all foods on mount
   useEffect(() => {
-  fetchCart(); // fetch only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchCart(); // fetch only once
   }, []);
 
   // ✅ Loader
@@ -33,11 +50,7 @@ const CartMain = () => {
 
   // ✅ Empty state
   if (!cart || cart.length === 0)
-    return (
-      <h5 className="text-center text-muted my-5">
-        Add  food items  😞
-      </h5>
-    );
+    return <h5 className="text-center text-muted my-5">Add food items 😞</h5>;
 
   // ✅ Render all foods
   return (
@@ -47,7 +60,7 @@ const CartMain = () => {
       <div className="row g-4">
         {cart.map((cat) => (
           <div key={cat._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <CartItemCard cat={cat} />
+            <CartItemCard item={cat} />
           </div>
         ))}
       </div>

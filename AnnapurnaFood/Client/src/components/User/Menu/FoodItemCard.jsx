@@ -31,10 +31,7 @@ const FoodItemsCard = ({ food }) => {
       {/* ✅ Image Section with Fallback */}
       <div style={{ height: "160px", overflow: "hidden" }}>
         <img
-          src={
-            food?.image ||
-            "https://plus.unsplash.com/premium_photo-1675252369719-dd52bc69c3df?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600"
-          }
+          src={`http://localhost:2000/upload/${food.image}`}
           alt={food?.name || "Food"}
           className="w-100 h-100"
           style={{

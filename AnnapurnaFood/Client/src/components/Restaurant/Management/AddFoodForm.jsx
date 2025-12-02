@@ -1,5 +1,6 @@
 // components/restaurant/Management/AddFoodForm.jsx
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -15,18 +16,19 @@ import {
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FoodContext } from "../../../context/Foodcontext";
+// import Sidebar from "../DashboardCommon/Sidebar";
 
-const AddFoodForm = ({ onBack, onSubmit }) => {
+export const AddFoodForm = () => {
+  const { loading } = useContext(FoodContext);
   const [food, setFood] = useState({
     name: "",
     description: "",
     category: "",
     price: "",
-    available: true,
-    image: "",
+    isAvailable: true,
+    image: null,
   });
-
-  const [preview, setPreview] = useState(null);
 
   const categories = [
     "North Indian",
@@ -38,35 +40,50 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
   ];
 
   const handleChange = (e) => {
-    setFood({ ...food, [e.target.name]: e.target.value });
-  };
+    const { name, type, checked, value, files } = e.target;
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFood({ ...food, image: file });
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!food.name || !food.category || !food.price) {
-      alert("Please fill in all required fields ⚠️");
-      return;
-    }
-
-    if (onSubmit) onSubmit(food);
-    alert("✅ Food item added successfully!");
     setFood({
-      name: "",
-      description: "",
-      category: "",
-      price: "",
-      available: true,
-      image: "",
+      ...food,
+      [name]:
+        type === "checkbox" ? checked : type === "file" ? files[0] : value,
     });
-    setPreview(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const restaurantID = localStorage.getItem("restarantId");
+    const fd = new FormData();
+    if (food.image) {
+      fd.append("image", food.image);
+    }
+    fd.append("name", food.name);
+    fd.append("description", food.description);
+    fd.append("category", food.category);
+    fd.append("price", food.price);
+    fd.append("available", food.isAvailable);
+
+    try {
+      loading;
+      const res = await axios.post(
+        `http://localhost:2000/food/add/${restaurantID}`,
+        fd,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" }, // Axios will set boundary automatically
+        }
+      );
+      console.log(res.data);
+      console.log(food.image);
+      alert("food added successful");
+      if (res.data.message === "food added successfull") {
+        alert("done ✅");
+      }
+    } catch (err) {
+      alert("some error occoured", err);
+      console.log("error ocdcored", err.message);
+      console.log("error ocdcored", err.message.response);
+      console.log(food.image);
+    }
   };
 
   return (
@@ -85,21 +102,6 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
             <Typography variant="h5" sx={{ fontWeight: 700, color: "#FF6A00" }}>
               🍔 Add New Food Item
             </Typography>
-
-            {onBack && (
-              <Button
-                startIcon={<ArrowBackIcon />}
-                onClick={onBack}
-                sx={{
-                  color: "#FF6A00",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  "&:hover": { color: "#EE0979" },
-                }}
-              >
-                Back
-              </Button>
-            )}
           </div>
 
           <Divider sx={{ mb: 3 }} />
@@ -172,9 +174,9 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
 
             {/* Image Upload */}
             <div className="text-center mb-3">
-              {preview ? (
+              {food.image ? (
                 <img
-                  src={preview}
+                  src={`http://localhost:2000/upload/${food.image}`}
                   alt="Food Preview"
                   style={{
                     width: "120px",
@@ -205,7 +207,12 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
                 }}
               >
                 Upload Image
-                <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                />
               </Button>
             </div>
 
@@ -213,9 +220,9 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={food.available}
+                  checked={food.isAvailable}
                   onChange={(e) =>
-                    setFood({ ...food, available: e.target.checked })
+                    setFood({ ...food, isAvailable: e.target.checked })
                   }
                   sx={{
                     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -229,7 +236,7 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
               }
               label={
                 <Typography sx={{ color: "#333", fontWeight: 600 }}>
-                  Available
+                  {food.isAvailable ? "Available" : "Unavailable"}
                 </Typography>
               }
               sx={{ mb: 2 }}
@@ -258,8 +265,6 @@ const AddFoodForm = ({ onBack, onSubmit }) => {
     </div>
   );
 };
-
-export default AddFoodForm;
 
 // import React, { useState } from "react";
 // import Sidebar from "../DashboardCommon/Sidebar";

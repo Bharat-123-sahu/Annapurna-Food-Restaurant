@@ -4,7 +4,7 @@ export const restaurentSchema = new mongoose.Schema({
   ownerName: String,
   email: String,
   phone: String,
-  cuisine:String,
+  cuisine: String,
   address: {
     street: String,
     city: String,
@@ -17,6 +17,6 @@ export const restaurentSchema = new mongoose.Schema({
   menu: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
   isOpen: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
-  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "admin" },
+  // ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "admin" },
   password: String,
 });

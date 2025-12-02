@@ -32,6 +32,7 @@ const AuthForm = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [buttonclick, setButtonclick] = useState(false);
   const navigate = useNavigate();
 
   // ✅ Full user schema fields
@@ -67,7 +68,7 @@ const AuthForm = () => {
         alert(data.message || "✅ Account created successfully!");
         navigate("/");
       } else {
-        const  {data}  = await axios.post(
+        const { data } = await axios.post(
           "http://localhost:2000/user/login",
           formData
         );
@@ -85,6 +86,11 @@ const AuthForm = () => {
     } finally {
       setLoading(false);
     }
+  };
+  const handleotp = () => {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    console.log(otp);
+    navigate("/forgetpassword");
   };
 
   return (
@@ -354,6 +360,16 @@ const AuthForm = () => {
               </Button>
             </Box>
           </form>
+          {!buttonclick ? (
+            <Typography
+              variant="body2"
+              sx={{ textAlign: "center", mt: 3, color: "gray" }}
+            >
+              {isSignup ? null : (
+                <Button onClick={handleotp}>Forget password</Button>
+              )}
+            </Typography>
+          ) : null}
 
           <Typography
             variant="body2"

@@ -1,6 +1,6 @@
 // components/restaurant/DashboardCommon/DashboardHeader.jsx
 // components/restaurant/DashboardCommon/DashboardHeader.jsx
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   AppBar,
@@ -22,13 +22,24 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 
-const DashboardHeader = ({
+import { RestaurantContext } from "../../../context/restaurantdata";
+
+
+export const DashboardHeader = ({
   restaurantName = "Foodie Restaurant",
   onMenuToggle,
   widthh = "100%",
   leftOffset = 0, // string/object ok
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+// const {restaurants,fetchRestaurantById} =useContext(RestaurantContext)
+  // const { fetchRestaurantById, restaurants } = useContext(RestaurantContext)
+  // useEffect(() => {
+  //   if (state?.id) {
+  //     return fetchRestaurantById(state.id);
+  //   }
+  // });
+
   const open = Boolean(anchorEl);
 
   const handleProfileClick = (event) => setAnchorEl(event.currentTarget);
@@ -54,10 +65,7 @@ const DashboardHeader = ({
       {/* container-fluid for responsive paddings */}
       <Toolbar className="container-fluid px-3 px-md-4">
         {/* Left: menu + title */}
-        <Box
-          className="d-flex align-items-center gap-2"
-          sx={{ flexShrink: 0 }}
-        >
+        <Box className="d-flex align-items-center gap-2" sx={{ flexShrink: 0 }}>
           {/* Mobile hamburger */}
           <IconButton
             edge="start"
@@ -106,10 +114,7 @@ const DashboardHeader = ({
         </Box>
 
         {/* Right: icons + avatar */}
-        <Box
-          className="d-flex align-items-center gap-2"
-          sx={{ flexShrink: 0 }}
-        >
+        <Box className="d-flex align-items-center gap-2" sx={{ flexShrink: 0 }}>
           <IconButton color="inherit" className="text-white">
             <Badge badgeContent={3} color="error">
               <NotificationsIcon />
@@ -124,8 +129,8 @@ const DashboardHeader = ({
 
           <IconButton onClick={handleProfileClick}>
             <Avatar
-              alt="Restaurant Owner"
-              src="https://cdn-icons-png.flaticon.com/512/706/706830.png"
+              alt=""
+              src={``|| "R"}
               className="border border-2"
               sx={{
                 width: 38,
@@ -146,13 +151,16 @@ const DashboardHeader = ({
             }}
           >
             <MenuItem onClick={handleClose} className="py-2">
-              <PersonIcon className="me-2" style={{ color: "#FF6A00" }} /> Profile
+              <PersonIcon className="me-2" style={{ color: "#FF6A00" }} />{" "}
+              Profile
             </MenuItem>
             <MenuItem onClick={handleClose} className="py-2">
-              <SettingsIcon className="me-2" style={{ color: "#FF6A00" }} /> Settings
+              <SettingsIcon className="me-2" style={{ color: "#FF6A00" }} />{" "}
+              Settings
             </MenuItem>
             <MenuItem onClick={handleLogout} className="py-2">
-              <LogoutIcon className="me-2" style={{ color: "#EE0979" }} /> Logout
+              <LogoutIcon className="me-2" style={{ color: "#EE0979" }} />{" "}
+              Logout
             </MenuItem>
           </Menu>
         </Box>
@@ -160,9 +168,6 @@ const DashboardHeader = ({
     </AppBar>
   );
 };
-
-export default DashboardHeader;
-
 
 // import React, { useState } from "react";
 // import DashboardHeader from "./DashboardHeader";

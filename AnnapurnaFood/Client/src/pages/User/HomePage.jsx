@@ -1,9 +1,11 @@
 import Footer from "../../components/common/Footer";
 import Navbar from "../../components/common/Navbar";
-import CategoryList from "../../components/User/Home/CategoryList";
+
 import HeroSection from "../../components/User/Home/HeroSection";
 import NewsLetters from "../../components/User/Home/Newsletter";
-import PopularFood from "../../components/User/Home/PopularFoods";
+import { Populatfooditem } from "../../components/User/Home/popularfooditem";
+import { PopulatRestaurantsItem } from "../../components/User/Home/popularreastaurantitems";
+
 import PopularRestaurants from "../../components/User/Home/PopularRestaurants";
 import TestiMonials from "../../components/User/Home/Testimonials";
 
@@ -13,8 +15,8 @@ export const HomePage = () => {
       <Navbar />
       <HeroSection />
       {/* <CategoryList /> */}
-      <PopularRestaurants />
-      <PopularFood />
+      <PopulatRestaurantsItem />
+      <Populatfooditem />
       <TestiMonials />
       <NewsLetters />
       <Footer />

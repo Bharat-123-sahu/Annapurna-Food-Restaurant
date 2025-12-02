@@ -4,6 +4,7 @@ import { RastaurantProvider } from "./restaurantdata";
 import { OrderProvider } from "./ordercontext";
 import { CartProvider } from "./cartcontext";
 import { FoodProvider } from "./Foodcontext";
+// import { OtpProvider } from "./otpvarifycontext";
 
 export const AllProviders = ({ children }) => (
   <UserProvider>
