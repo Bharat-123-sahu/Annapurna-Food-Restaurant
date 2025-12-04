@@ -104,6 +104,7 @@ export const FoodProvider = ({ children }) => {
       const updated = res?.data?.food;
       if (updated) {
         setFoods((prev) => prev.map((f) => (f._id === id ? updated : f)));
+        alert("success full added");
       }
     } catch (err) {
       console.error("Error updating food:", err);
@@ -115,6 +116,7 @@ export const FoodProvider = ({ children }) => {
     try {
       await api.delete(`/food/delete/${id}`);
       setFoods((prev) => prev.filter((f) => f._id !== id));
+      alert("item delete successful")
     } catch (err) {
       console.error("Error deleting food:", err);
     }

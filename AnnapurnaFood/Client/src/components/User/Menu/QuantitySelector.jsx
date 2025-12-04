@@ -1,4 +1,3 @@
-// components/user/Menu/QuantitySelector.jsx
 import React from "react";
 import { IconButton, Typography, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,7 +7,7 @@ const QuantitySelector = ({
   quantity = 1,
   min = 1,
   max = 10,
-  onChange,
+  onChange = () => {},
   color = "#FF6A00",
   size = "medium",
 }) => {
@@ -46,7 +45,6 @@ const QuantitySelector = ({
         },
       }}
     >
-      {/* Decrease Button */}
       <IconButton
         size="small"
         onClick={handleDecrease}
@@ -59,7 +57,6 @@ const QuantitySelector = ({
         <RemoveIcon fontSize="small" />
       </IconButton>
 
-      {/* Quantity Display */}
       <Typography
         variant="body1"
         sx={{
@@ -74,7 +71,6 @@ const QuantitySelector = ({
         {quantity}
       </Typography>
 
-      {/* Increase Button */}
       <IconButton
         size="small"
         onClick={handleIncrease}
@@ -91,51 +87,3 @@ const QuantitySelector = ({
 };
 
 export default QuantitySelector;
-
-// import React, { useState } from "react";
-// import { Card, CardContent, Typography } from "@mui/material";
-// import QuantitySelector from "./QuantitySelector";
-
-// const FoodItem = ({ food }) => {
-//   const [quantity, setQuantity] = useState(1);
-
-//   const handleQuantityChange = (value) => {
-//     setQuantity(value);
-//     console.log(`${food.name} quantity:`, value);
-//   };
-
-//   return (
-//     <Card
-//       sx={{
-//         borderRadius: "16px",
-//         overflow: "hidden",
-//         boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-//         "&:hover": { transform: "translateY(-4px)" },
-//         transition: "0.3s",
-//       }}
-//     >
-//       <img
-//         src={food.image}
-//         alt={food.name}
-//         style={{ height: "160px", objectFit: "cover", width: "100%" }}
-//       />
-//       <CardContent>
-//         <Typography variant="h6" sx={{ fontWeight: 600 }}>
-//           {food.name}
-//         </Typography>
-//         <Typography variant="subtitle1" sx={{ color: "#FF6A00", mb: 2 }}>
-//           ₹{food.price}
-//         </Typography>
-
-//         <QuantitySelector
-//           quantity={quantity}
-//           onChange={handleQuantityChange}
-//           min={1}
-//           max={10}
-//         />
-//       </CardContent>
-//     </Card>
-//   );
-// };
-
-// export default FoodItem;

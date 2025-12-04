@@ -22,11 +22,20 @@ FoodRouter.get("/", getAllFood);
 FoodRouter.get("/:id", getFoodById);
 FoodRouter.get("/:category", getFoodByCategory);
 FoodRouter.get("/restaurant/:restaurantId", getFoodByRestaurant);
-FoodRouter.put("/update/available",RestaurantVerification, updateFoodAvailability);
+FoodRouter.put(
+  "/update/available",
+  RestaurantVerification,
+  updateFoodAvailability
+);
 
 // ---------- Admin Routes ----------
-FoodRouter.post("/add/:id", RestaurantVerification,Upload.single("image") , addFood);
-FoodRouter.patch("/update/:id", RestaurantVerification, updateFood);
-FoodRouter.delete("/delete/:id",  RestaurantVerification, deleteFood);
+FoodRouter.post(
+  "/add/:id",
+  RestaurantVerification,
+  Upload.single("image"),
+  addFood
+);
+FoodRouter.patch("/update/:id", updateFood);
+FoodRouter.delete("/delete/:id",  deleteFood);
 
 export default FoodRouter;

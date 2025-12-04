@@ -11,32 +11,32 @@ import CartItemCard from "./CartItemCard";
 // ];
 const CartMain = () => {
   // ✅ Access context values
-  const { fetchCart, cart, loading, total } = useContext(CartContext);
+  const { fetchCart, total, cart, loading, updateQuantity, removeItem } =
+    useContext(CartContext);
+  const [loginReady, setLoginReady] = useState(false);
 
-  // const [cartitems, setCartItems] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Margherita Pizza",
-  //     price: 249,
-  //     quantity: 2,
-  //     image:
-  //       "https://images.unsplash.com/photo-1601924582975-7e1d99c0a3c4?auto=format&fit=crop&w=800&q=80",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Chicken Burger",
-  //     price: 199,
-  //     quantity: 1,
-  //     image:
-  //       "https://images.unsplash.com/photo-1606755962773-0c8f1d1074bc?auto=format&fit=crop&w=800&q=80",
-  //   },
-  // ]);
-  //insert the total😤
-  // // ✅ Fetch all foods on mount
+  // Step 1: Load token
   useEffect(() => {
-    fetchCart(); // fetch only once
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      setLoginReady(true);
+    }
   }, []);
 
+  // Step 2: Fetch cart ONLY when token is ready
+  useEffect(() => {
+    if (!loginReady) return;
+    fetchCart();
+  }, [loginReady]);
+
+  const handleQuantityChange = (itemId, qty) => {
+    // call context function (must exist)
+    updateQuantity(itemId, qty);
+  };
+
+  const handleRemove = (itemId) => {
+    removeItem(itemId);
+  };
   // ✅ Loader
   if (loading)
     return (
@@ -49,21 +49,30 @@ const CartMain = () => {
     );
 
   // ✅ Empty state
-  if (!cart || cart.length === 0)
+  if (cart.length === 0)
     return <h5 className="text-center text-muted my-5">Add food items 😞</h5>;
 
   // ✅ Render all foods
   return (
-    <div className="container my-5">
-      <h3 className="fw-bold mb-4 text-center">your Cart 🍝</h3>
+    <div className="container mt-4">
+      {cart.length === 0 ? (
+        <h3>Your cart is empty</h3>
+      ) : (
+        <>
+          {cart.map((item) => (
+            <CartItemCard
+              key={item._id}
+              item={item}
+              onQuantityChange={handleQuantityChange}
+              onRemove={handleRemove}
+            />
+          ))}
 
-      <div className="row g-4">
-        {cart.map((cat) => (
-          <div key={cat._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-            <CartItemCard item={cat} />
+          <div style={{ textAlign: "right", marginTop: 16 }}>
+            <strong>Total: ₹{total.toFixed(2)}</strong>
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };

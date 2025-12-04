@@ -1,11 +1,15 @@
 // components/user/Menu/FoodItemsCard.jsx
 // src/components/user/Menu/FoodItemsCard.jsx
 import React from "react";
+import { useState } from "react";
 import { Card, CardContent, Typography, Rating } from "@mui/material";
 import AddToCartButton from "./AddToCartButton";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CartItemCard from "../Cart/CartItemCard";
 
 const FoodItemsCard = ({ food }) => {
+  
+  const [count, setCount] = useState(0);
   //
   if (!food) {
     return (
@@ -83,11 +87,16 @@ const FoodItemsCard = ({ food }) => {
         {/* ✅ Add To Cart Button */}
         <AddToCartButton
           food={food}
-          onAdd={(count) => console.log(`${food?.name} added, count: ${count}`)}
-          onRemove={(count) =>
+          onAdd={(count) => (
+            console.log(`${food?.name} added, count: ${count}`),
+            setCount(count)
+          )}
+          onRemove={(count) => (
+            setCount(count),
             console.log(`${food?.name} removed, count: ${count}`)
-          }
+          )}
         />
+        {/* {count > 0 ? <CartItemCard item={food} /> : "add food into cart"} */}
       </CardContent>
     </Card>
   );

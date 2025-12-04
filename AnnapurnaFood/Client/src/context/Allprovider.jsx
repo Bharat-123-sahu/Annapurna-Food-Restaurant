@@ -8,12 +8,12 @@ import { FoodProvider } from "./Foodcontext";
 
 export const AllProviders = ({ children }) => (
   <UserProvider>
-    <RastaurantProvider>
-      <OrderProvider>
-        <CartProvider>
+    <CartProvider>
+      <RastaurantProvider>
+        <OrderProvider>
           <FoodProvider>{children}</FoodProvider>
-        </CartProvider>
-      </OrderProvider>
-    </RastaurantProvider>
+        </OrderProvider>
+      </RastaurantProvider>
+    </CartProvider>
   </UserProvider>
 );

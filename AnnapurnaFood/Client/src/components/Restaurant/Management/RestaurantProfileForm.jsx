@@ -25,7 +25,7 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
       phone: "9876543210",
       address: "Vijay Nagar, Indore, MP",
       openingHours: "10:00 AM - 11:00 PM",
-      image: "",
+     
       banner: "",
       open: true,
     }
@@ -43,7 +43,7 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
     if (file) {
       const previewURL = URL.createObjectURL(file);
       setProfile({ ...profile, [type]: file });
-      if (type === "image") setPreviewLogo(previewURL);
+      if (type === "logo") setPreviewLogo(previewURL);
       if (type === "banner") setPreviewBanner(previewURL);
     }
   };

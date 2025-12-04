@@ -76,7 +76,8 @@ export const getFoodById = async (req, res) => {
 // ✅ 4️⃣ Update food item
 export const updateFood = async (req, res) => {
   try {
-    const { id, name, description, price, category, isAvailable } = req.body;
+    const id = req.params.id;
+    const { name, description, price, category, isAvailable } = req.body;
 
     const updatedFood = await FoodModel.findByIdAndUpdate(
       id,
@@ -96,7 +97,7 @@ export const updateFood = async (req, res) => {
 // ✅ 5️⃣ Delete food item
 export const deleteFood = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
 
     const food = await FoodModel.findByIdAndDelete(id);
     if (!food) return res.status(404).json({ message: "Food not found" });

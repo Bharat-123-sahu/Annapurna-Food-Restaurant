@@ -1,47 +1,48 @@
 import jwt from "jsonwebtoken";
-import { UserModel } from "../models/Usermodel.js"; // <-- MODEL KO BADLEIN!
+import { UserModel } from "../models/Usermodel.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-// YEH HAI AAPKA SAHI 'userVerification' MIDDLEWARE
 export const userVerification = async (req, res, next) => {
-  let token;
+  try {
+    let token;
 
-  // 1. Check karein ki 'Authorization' header hai aur 'Bearer' se shuru hota hai
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    try {
-      // 2. Token ko header se nikaalein ("Bearer [token]")
-      token = req.headers.authorization.split(" ")[1];
-
-      // 3. Token ko verify karein
-      const decoded = jwt.verify(token, process.env.TOKEN_KEY); // Aapka TOKEN_KEY
-
-      // 4. Token ki ID se ADMIN ko dhoondhein (UserModel ko nahi)
-      //    aur password hide kar dein
-      req.user = await UserModel.findById(decoded.id).select("-password");
-
-      if (!req.user) {
-        return res
-          .status(401)
-          .json({ message: "Admin not found with this token" });
-      }
-
-      // 5. Agle middleware (isAdmin) par jaayein
-      next();
-    } catch (error) {
-      console.error(error);
-      return res.status(401).json({ message: "Not authorized, token failed" });
+    // 1. Read token from HTTP-only cookie
+    if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
     }
-  }
+    // 2. OR from Authorization header
+    else if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    // 3. If no token found at all
+    else {
+      return res.status(401).json({ message: "Not authorized, no token" });
+    }
 
-  // 6. Agar token hai hi nahi
-  if (!token) {
-    return res.status(401).json({ message: "Not authorized, no token" });
+    // 4. Verify token
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+
+    // 5. Find user from DB
+    const user = await UserModel.findById(decoded.id).select("-password");
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "User not found with this token" });
+    }
+
+    // 6. Attach user to request
+    req.user = user;
+
+    // 7. Continue
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ message: "Not authorized, token failed" });
   }
 };
-
-// YEH AAPKA 'isAdmin' MIDDLEWARE HAI (Jo pehle discuss kiya tha)

@@ -1,80 +1,80 @@
 // components/user/Menu/AddToCartButton.jsx
 // src/components/user/Menu/AddToCartButton.jsx
-import React, { useState, useContext } from "react";
-import { /* Button,*/ Box } from "@mui/material";
+import React, { useState, useContext, useEffect } from "react";
+import { Box } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import QuantitySelector from "./QuantitySelector";
 import { CartContext } from "../../../context/cartcontext";
 import Button from "../../common/Button";
 
 const AddToCartButton = ({
-  food, // 👈 make sure to pass this from FoodItemsCard
+  food,
   onAdd,
   onRemove,
   initialCount = 0,
   sizee = "medium",
   styleType = "primary",
-  responsive=true,
+  responsive = true,
 }) => {
-  // ✅ Access backend functions
-  const { addToCart, updateQuantity, removeItem } = useContext(CartContext);
+  const { cart, addToCart, updateQuantity, removeItem } =
+    useContext(CartContext);
 
-  // ✅ Local state for UI
   const [count, setCount] = useState(initialCount);
   const [isAdded, setIsAdded] = useState(initialCount > 0);
 
-  // ✅ Add first time to cart
-  const handleAddToCart = async () => {
-    try {
-      await addToCart(food._id, 1); // POST /cart/add
-      setCount(1);
-      setIsAdded(true);
-      if (onAdd) onAdd(1);
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  };
+  // ⭐ Find cart item ID using food._id
+  // const getCartItemId = () => {
+  //   const item = cart.find((c) => c.food._id === food._id);
+  //   return item?._id; // return cart item ID
+  // };
+const getCartItemId = () => {
+  const item = cart.find((c) => c.food._id === food._id);
+  return item?._id;
+};
 
-  // ✅ Quantity changed via QuantitySelector
-  const handleQuantityChange = async (newQty) => {
-    try {
-      if (newQty === 0) {
-        await removeItem(food._id); // DELETE /cart/removeitem/:id
-        setIsAdded(false);
-        setCount(0);
-        if (onRemove) onRemove(0);
-      } else {
-        await updateQuantity(food._id, newQty); // PUT /cart/updateqty/:id
-        setCount(newQty);
-        if (onAdd) onAdd(newQty);
-      }
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-    }
-  };
+useEffect(() => {
+  const cartItem = cart.find((c) => c.food._id === food._id);
 
-  // ✅ Custom button colors
+  if (cartItem) {
+    setIsAdded(true);
+    setCount(cartItem.quantity);
+  } else {
+    setIsAdded(false);
+    setCount(0);
+  }
+}, [cart]);
+
+// ⭐ Add first time
+const handleAddToCart = () => {
+  addToCart(food._id, 1); // ✔ correct
+  onAdd?.(1);
+};
+
+// ⭐ When quantity changes
+const handleQuantityChange = (newQty) => {
+  const cartItemId = getCartItemId();
+  if (!cartItemId) return;
+
+  if (newQty === 0) {
+    removeItem(cartItemId);
+  } else {
+    updateQuantity(cartItemId, newQty);
+  }
+};
+
+
+  // Styling
   const colors =
     styleType === "primary"
-      ? {
-          bg: "#FF6A00",
-          hover: "#EE0979",
-          text: "#fff",
-        }
-      : {
-          bg: "#fff",
-          hover: "#f8f8f8",
-          text: "#FF6A00",
-        };
+      ? { bg: "#FF6A00", hover: "#EE0979", text: "#fff" }
+      : { bg: "#fff", hover: "#f8f8f8", text: "#FF6A00" };
 
   return (
     <Box className="d-flex justify-content-center align-items-center">
-      {/* When food is NOT added to cart */}
       {!isAdded ? (
         <Button
           text="Add to cart"
           classNamee={responsive ? "btn-responsive" : ""}
-          // fullWidth={fullWidth}
           onClickk={handleAddToCart}
           sizee={sizee}
           startIcon={<ShoppingCartIcon />}
@@ -89,9 +89,8 @@ const AddToCartButton = ({
             boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
             "&:hover": { backgroundColor: colors.hover },
           }}
-        ></Button>
+        />
       ) : (
-        // ✅ When added — show QuantitySelector component
         <QuantitySelector
           quantity={count}
           min={0}

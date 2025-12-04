@@ -26,7 +26,8 @@ import { FoodContext } from "../../../context/Foodcontext";
 export const FoodList = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const { fetchFoodByRestaurant, loading, foods } = useContext(FoodContext);
+  const { fetchFoodByRestaurant, loading, foods, deleteFood } =
+    useContext(FoodContext);
 
   const id = localStorage.getItem("restarantId");
   useEffect(() => {
@@ -35,8 +36,10 @@ export const FoodList = () => {
     }
   });
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this item? ❌")) {
-      setFoods(foods.filter((item) => item.id !== id));
+    if (id) {
+      deleteFood(id);
+    } else {
+      alert("id de do  delete karna hay");
     }
   };
 
@@ -182,7 +185,7 @@ export const FoodList = () => {
                       <EditIcon />
                     </IconButton>
                     <IconButton
-                      onClick={() => handleDelete(food.id)}
+                      onClick={() => handleDelete(food._id)}
                       sx={{ color: "#EE0979" }}
                     >
                       <DeleteIcon />

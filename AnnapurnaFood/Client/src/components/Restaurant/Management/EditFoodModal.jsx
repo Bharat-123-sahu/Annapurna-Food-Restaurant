@@ -11,18 +11,17 @@ import {
   Switch,
   Divider,
 } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import SaveIcon from "@mui/icons-material/Save";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FoodContext } from "../../../context/Foodcontext";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 export const EditFood = ({ onBack }) => {
   let location = useLocation();
   const update = location.state?.update || {};
-  const { fetchFoodById, foods, updateFood, loading } = useContext(FoodContext);
-
+  const { updateFood } = useContext(FoodContext);
+  const navigate = useNavigate();
   const [food, setFood] = useState({
     name: update.name || "",
     description: update.description || "",
@@ -31,12 +30,7 @@ export const EditFood = ({ onBack }) => {
     available: update.available ?? true,
     id: update._id || null,
   });
-  // const [preview, setPreview] = useState(null);
-  // // useEffect(() => {
-  // //   if (food.id) {
-  // //     updateFood(food.id);
-  // //   }
-  // // });
+
   const categories = [
     "North Indian",
     "South Indian",
@@ -52,14 +46,13 @@ export const EditFood = ({ onBack }) => {
     setFood({ ...food, [e.target.name]: e.target.value });
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    updateFood(food.id, food);
-  };
 
-  // if (food);
-  // alert("✅ Food item updated successfully!");
+    updateFood(food.id, { ...food, id: food.id });
+    navigate("/dashboard/items");
+  };
 
   return (
     <div className="container my-5">
@@ -256,48 +249,3 @@ export const EditFood = ({ onBack }) => {
     </div>
   );
 };
-
-// import React, { useState } from "react";
-// import EditFood from "./EditFood";
-// import FoodList from "./FoodList";
-
-// const FoodEditExample = () => {
-//   const [editMode, setEditMode] = useState(false);
-//   const [selectedFood, setSelectedFood] = useState({
-//     id: 1,
-//     name: "Margherita Pizza",
-//     description: "Classic cheese pizza with tomato base",
-//     category: "Italian",
-//     price: 299,
-//     available: true,
-//     image:
-//       "https://images.unsplash.com/photo-1601924582971-b8d3da0b336f?auto=format&fit=crop&w=800&q=80",
-//   });
-
-//   const handleUpdate = (updatedFood) => {
-//     console.log("Updated Food:", updatedFood);
-//     alert(`✅ ${updatedFood.name} updated successfully!`);
-//     setEditMode(false);
-//   };
-
-//   return (
-//     <div>
-//       {editMode ? (
-//         <EditFood
-//          ={selectedFood}
-//           onBack={() => setEditMode(false)}
-//         ={handleUpdate}
-//         />
-//       ) : (
-//         <FoodList />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default FoodEditExample;
-
-// // PUT /api/restaurant/food/:id
-// const formData = new FormData();
-// Object.keys(food).forEach((key) => formData.append(key, food[key]));
-// await axios.put(`/api/restaurant/food/${food._id}`, formData);

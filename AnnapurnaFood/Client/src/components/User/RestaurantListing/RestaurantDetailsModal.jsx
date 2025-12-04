@@ -124,10 +124,7 @@ const RestaurantDetail = () => {
             </h6>
           ) : (
             foods.map((item) => (
-              <div
-                key={item._id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3"
-              >
+              <div key={item._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                 <Card
                   className="shadow-sm border-0"
                   sx={{
@@ -142,10 +139,7 @@ const RestaurantDetail = () => {
                 >
                   <div style={{ height: "160px", overflow: "hidden" }}>
                     <img
-                      src={
-                        item.image ||
-                        "https://placehold.co/300x200?text=No+Image"
-                      }
+                      src={`http://localhost:2000/upload/${item.image}`}
                       alt={item.name}
                       className="w-100 h-100"
                       style={{ objectFit: "cover" }}
@@ -178,12 +172,14 @@ const RestaurantDetail = () => {
 
                   <CardActions sx={{ justifyContent: "center", pb: 2 }}>
                     <AddToCartButton
-          food={item}
-          onAdd={(count) => console.log(`${item?.name} added, count: ${count}`)}
-          onRemove={(count) =>
-            console.log(`${item?.name} removed, count: ${count}`)
-          }
-        />
+                      food={item}
+                      onAdd={(count) =>
+                        console.log(`${item?.name} added, count: ${count}`)
+                      }
+                      onRemove={(count) =>
+                        console.log(`${item?.name} removed, count: ${count}`)
+                      }
+                    />
                   </CardActions>
                 </Card>
               </div>

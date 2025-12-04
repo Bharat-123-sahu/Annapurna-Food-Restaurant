@@ -12,10 +12,18 @@ import { userVerification } from "../middleware/Authmiddleware.js";
 const CartRouter = express.Router();
 
 // ---------- User Cart Routes ----------
-CartRouter.post("/add", userVerification, addToCart); // Add food to cart
-CartRouter.put("/updateqty/:id", userVerification, updateQuantity); // Update quantity or details
-CartRouter.delete("/removeitem/:id", userVerification, removeItem); // Remove specific food
-CartRouter.get("/", userVerification, getCart); // Get user’s full cart
-CartRouter.delete("/clear", userVerification, clearCart); // Clear entire cart
+// 1️⃣ Add item to cart (foodId from URL)
+CartRouter.post("/add/:id", userVerification, addToCart);
 
+// 2️⃣ Get full cart (user from token)
+CartRouter.get("/", userVerification, getCart);
+
+// 3️⃣ Update quantity (foodId & quantity from body)
+CartRouter.patch("/updateqty/:id", userVerification, updateQuantity);
+
+// 4️⃣ Remove specific item (foodId from body)
+CartRouter.delete("/removeitem/:id", userVerification, removeItem);
+
+// 5️⃣ Clear entire cart (user from token)
+CartRouter.delete("/clear", userVerification, clearCart);
 export default CartRouter;

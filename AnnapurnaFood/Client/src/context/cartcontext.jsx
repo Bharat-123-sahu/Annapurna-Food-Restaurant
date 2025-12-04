@@ -1,16 +1,16 @@
 // src/context/CartContext.jsx
-import React, { createContext, useState, useCallback, useEffect } from "react";
-import api from "../apis/axiosconfigs"; // Axios instance (with baseURL)
+import React, { createContext, useState, useCallback } from "react";
+import api from "../apis/axiosconfigs";
 
-// ✅ Create Context
+// Create Context
 export const CartContext = createContext({
   cart: [],
   total: 0,
   loading: false,
   fetchCart: () => {},
-  addToCart: (foodId, quantity) => {},
-  updateQuantity: (cartItemId, quantity) => {},
-  removeItem: (cartItemId) => {},
+  addToCart: () => {},
+  updateQuantity: () => {},
+  removeItem: () => {},
   clearCart: () => {},
 });
 
@@ -18,82 +18,82 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // ---------- GET CART ----------
+  // 1️⃣ GET USER CART
   const fetchCart = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await api.get("/cart")//, { withCredentials: true });
-      const cartItems = res?.data?.cart ?? [];
-      setCart(Array.isArray(cartItems) ? cartItems : []);
+      const res = await api.get("/cart", { withCredentials: true });
+
+      console.log("GET /cart RESPONSE:", res.data);
+      console.log("SETTING CART ITEMS TO:", res.data.items);
+
+      setCart(res.data.items ?? []);
     } catch (err) {
-      console.log("Error fetching cart:", err);
+      console.error("Error fetching cart:", err);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // ---------- ADD TO CART ----------
+  // 2️⃣ ADD TO CART
   const addToCart = async (foodId, quantity = 1) => {
     try {
       const res = await api.post(
-        "/cart/add",
-        { foodId, quantity },
+        `/cart/add/${foodId}`,
+        { quantity },
         { withCredentials: true }
       );
-      setCart(res?.data?.cart ?? []);
+
+      setCart(res.data?.cart?.items);
     } catch (err) {
       console.error("Error adding to cart:", err);
     }
   };
 
-  // ---------- UPDATE QUANTITY ----------
-  const updateQuantity = async (cartItemId, quantity) => {
-    try {
-      const res = await api.put(
-        `/cart/updateqty/${cartItemId}`,
-        { quantity },
-        { withCredentials: true }
-      );
-      setCart(res?.data?.cart ?? []);
-    } catch (err) {
-      console.error("Error updating cart quantity:", err);
-    }
-  };
+  // 3️⃣ UPDATE QUANTITY=================
+  const updateQuantity = async (itemId, quantity) => {
+  try {
+    const res = await api.patch(
+      `/cart/updateqty/${itemId}`,
+      { quantity },
+      { withCredentials: true }
+    );
 
-  // ---------- REMOVE ITEM ----------
-  const removeItem = async (cartItemId) => {
-    try {
-      const res = await api.delete(`/cart/removeitem/${cartItemId}`, {
-        withCredentials: true,
-      });
-      setCart(res?.data?.cart ?? []);
-    } catch (err) {
-      console.error("Error removing item:", err);
-    }
-  };
+    setCart(res.data.items ?? []);
+  } catch (err) {
+    console.error("Error updating quantity:", err);
+  }
+};
 
-  // ---------- CLEAR CART ----------
+  // 4️⃣ REMOVE ITEM
+ const removeItem = async (itemId) => {
+  try {
+    const res = await api.delete(`/cart/removeitem/${itemId}`, {
+      withCredentials: true,
+    });
+
+    setCart(res.data?.items ?? []);
+  } catch (err) {
+    console.error("Error removing item:", err);
+  }
+};
+
+  // 5️⃣ CLEAR CART
   const clearCart = async () => {
     try {
-      const res = await api.delete("/cart/clear", { withCredentials: true });
+      const res = await api.delete("/cart/clear", {
+        withCredentials: true,
+      });
       setCart([]);
     } catch (err) {
       console.error("Error clearing cart:", err);
     }
   };
 
-  // ---------- CALCULATE TOTAL ----------
-  const total = cart.reduce(
-    (acc, item) => acc + item.foodId?.price * item.quantity,
-    0
-  );
+  // 6️⃣ TOTAL PRICE
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  // ---------- AUTO FETCH ON LOAD ----------
-  // useEffect(() => {
-  //   fetchCart();
-  // }, [fetchCart]);
-
-  // ---------- CONTEXT VALUE ----------
+  // 7️⃣ CONTEXT VALUE
   const value = {
     cart,
     total,

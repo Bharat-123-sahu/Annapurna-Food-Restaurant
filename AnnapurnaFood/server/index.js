@@ -13,6 +13,7 @@ import UserRouter from "./routes/UserRoutes.js";
 import { Nodemail } from "./routes/nodemial.js";
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 config();
 app.use(
   cors({
@@ -20,7 +21,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
 app.use("/admin", AdminRouter);
 app.use("/cart", CartRouter);
 app.use("/order", OrderRouter);

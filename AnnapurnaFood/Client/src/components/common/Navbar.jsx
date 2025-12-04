@@ -1,5 +1,7 @@
 // components/User/Layout/Navbar.jsx
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -19,12 +21,34 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
 
+  const handellogout = async (e) => {
+    e.preventDefault();
+    console.log("button automatic call");
+    const ok = window.confirm("Are you sure you want to logout?");
+    if (!ok) return;
+
+    try {
+      const res = await axios.post(
+        "http://localhost:2000/user/logout",
+        {},
+
+        { withCredentials: true }
+      );
+      console.log(res.data);
+      alert("Logout successful");
+      sessionStorage.removeItem("token");
+      navigate("/login");
+    } catch (error) {
+      console.log("Logout failed", error);
+    }
+  };
   return (
     <>
       <AppBar
@@ -95,10 +119,14 @@ const Navbar = () => {
                 },
               }}
             >
-              <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
+              <MenuItem
+                component={Link}
+                to="/profile"
+                onClick={handleMenuClose}
+              >
                 Profile
               </MenuItem>
-              <MenuItem onClick={() => alert("🔒 Logged out!")}>Logout</MenuItem>
+              <MenuItem onClick={handellogout}>Logout</MenuItem>
             </Menu>
 
             <Link className="nav-link text-white" to="/login">
@@ -112,7 +140,10 @@ const Navbar = () => {
 
           {/* 📱 Mobile Hamburger */}
           <div className="d-md-none">
-            <IconButton color="inherit" onClick={() => setMobileOpen(!mobileOpen)}>
+            <IconButton
+              color="inherit"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
               <MenuIcon sx={{ color: "#fff" }} />
             </IconButton>
           </div>

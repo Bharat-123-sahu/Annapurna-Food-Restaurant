@@ -15,15 +15,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 const RestaurantCards = ({ res }) => {
- 
-  
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/restaurantdetail/${res._id}`, { state: { restaurant: res } });
     // console.log("click")
   };
-  
+
   return (
     <Card
       className="shadow-sm border-0 restaurant-card"
@@ -40,11 +38,10 @@ const RestaurantCards = ({ res }) => {
     >
       <Box sx={{ height: 180, overflow: "hidden" }}>
         <img
-          src={
-            res?.image ||
+          src={`http://localhost:2000/upload/${res.logo}`}
+          alt={
             "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVzdGF1cmFudHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600"
           }
-          alt={res?.name}
           className="w-100 h-100"
           style={{
             objectFit: "cover",
