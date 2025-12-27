@@ -13,6 +13,7 @@ export const restaurentSchema = new mongoose.Schema({
   },
 
   logo: String,
+  poster: String,
   rating: { type: Number, default: 4.0 },
   menu: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
   isOpen: { type: Boolean, default: true },

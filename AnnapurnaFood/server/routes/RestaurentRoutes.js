@@ -28,11 +28,23 @@ RestaurentRouter.post("/login", loginRestaurent); //
 // ---------- Admin Routes ----------
 RestaurentRouter.post(
   "/register",
-  Upload.single("logo"),
+  Upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "poster", maxCount: 1 },
+  ]),
 
   addRestaurant
 ); // Add new restaurant
-RestaurentRouter.patch("/update/:id", RestaurantVerification, updateRestaurant); // Update restaurant info
+RestaurentRouter.patch(
+  "/update/:id",
+  RestaurantVerification,
+  Upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "poster", maxCount: 1 },
+  ]),
+  updateRestaurant
+);
+// Update restaurant info
 RestaurentRouter.delete(
   "/delete/:id",
   RestaurantVerification,

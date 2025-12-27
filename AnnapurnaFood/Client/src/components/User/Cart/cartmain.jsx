@@ -5,6 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { CartContext } from "../../../context/cartcontext";
 import CartItemCard from "./CartItemCard";
+import { Button } from "react-bootstrap";
 // const foods = [
 //   { _id: 1, name: "Pizza", price: 250, image: "https://images.unsplash.com/photo-1761839257664-ecba169506c1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=600" },
 //   { _id: 2, name: "Burger", price: 180, image: "https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8&auto=format&fit=crop&q=60&w=600" },
@@ -67,7 +68,7 @@ const CartMain = () => {
               onRemove={handleRemove}
             />
           ))}
-
+          {/* <Button variant="contained" value="Conform order" /> */}
           <div style={{ textAlign: "right", marginTop: 16 }}>
             <strong>Total: ₹{total.toFixed(2)}</strong>
           </div>

@@ -57,7 +57,8 @@ export const addRestaurant = async (req, res) => {
       address: { street, city, state, postalCode },
       password: hashpassword,
       isOpen,
-      logo: req.file ? req.file.filename : null,
+      logo: req.files.logo ? req.files.logo[0].filename : null,
+      poster: req.files.poster ? req.files.poster[0].filename : null,
     });
 
     res
@@ -150,8 +151,22 @@ export const getRestaurantById = async (req, res) => {
 export const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // BODY FIELDS (text)
     const updatedData = req.body;
 
+    // HANDLE FILES
+    if (req.files) {
+      if (req.files.logo && req.files.logo[0]) {
+        updatedData.logo = req.files.logo[0].filename;
+      }
+
+      if (req.files.poster && req.files.poster[0]) {
+        updatedData.poster = req.files.poster[0].filename;
+      }
+    }
+
+    // Update restaurant
     const restaurant = await RestaurentModel.findByIdAndUpdate(
       id,
       updatedData,
@@ -162,12 +177,15 @@ export const updateRestaurant = async (req, res) => {
       return res.status(404).json({ message: "Restaurant not found" });
     }
 
-    res
-      .status(200)
-      .json({ message: "Restaurant updated successfully", restaurant });
+    return res.status(200).json({
+      message: "Restaurant updated successfully",
+      restaurant,
+    });
   } catch (error) {
     console.error("Error updating restaurant:", error);
-    res.status(500).json({ message: "Server Error while updating restaurant" });
+    return res
+      .status(500)
+      .json({ message: "Server Error while updating restaurant" });
   }
 };
 

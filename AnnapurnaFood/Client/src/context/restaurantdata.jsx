@@ -69,19 +69,21 @@ export const RastaurantProvider = ({ children }) => {
   // ---------- UPDATE RESTAURANT ----------
   const updateRestaurant = async (id, data) => {
     try {
-      const res = await api.put(`/rastaurant/${id}`, data);
+      const res = await api.patch(`/rastaurant/update/${id}`, data);
+      console.log(res.data)
       setRestaurants((prev) =>
-        prev.map((r) => (r._id === id ? { ...r, ...res.data.restaurant } : r))
+        prev.map((r) => (r._id === id ? { ...r, ...res.data?.restaurants } : r))
       );
     } catch (err) {
       console.error("Error updating restaurant:", err);
+      console.error("Error status:", err.status);
     }
   };
 
   // ---------- DELETE RESTAURANT ----------
   const deleteRestaurant = async (id) => {
     try {
-      await api.delete(`/rastaurant/${id}`);
+      await api.delete(`/rastaurant/delete/${id}`);
       setRestaurants((prev) => prev.filter((r) => r._id !== id));
     } catch (err) {
       console.error("Error deleting restaurant:", err);

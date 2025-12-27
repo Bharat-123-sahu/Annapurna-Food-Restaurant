@@ -31,6 +31,7 @@ const RestaurantRegister = () => {
     password: "",
     isOpen: true,
     logo: null,
+    poster: null,
   });
 
   // ✅ FIXED handleChange
@@ -60,6 +61,9 @@ const RestaurantRegister = () => {
 
     if (formData.logo) {
       fd.append("logo", formData.logo);
+    }
+    if (formData.poster) {
+      fd.append("poster", formData.poster);
     }
     fd.append("name", formData.name);
     fd.append("ownername", formData.ownerName);
@@ -254,8 +258,19 @@ const RestaurantRegister = () => {
               Upload Logo
               <input
                 type="file"
-                hidden
                 name="logo"
+                accept="image/*"
+                onChange={handleChange}
+              />
+            </Button>
+          </div>
+          {/* Poster Upload */}
+          <div className="col-md-12">
+            <Button fullWidth variant="outlined" component="label">
+              Upload Poster
+              <input
+                type="file"
+                name="poster"
                 accept="image/*"
                 onChange={handleChange}
               />

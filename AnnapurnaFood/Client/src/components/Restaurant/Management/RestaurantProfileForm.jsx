@@ -16,44 +16,128 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SaveIcon from "@mui/icons-material/Save";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../DashboardCommon/Sidebar";
-
+import { RestaurantContext } from "../../../context/restaurantdata";
+import { useContext } from "react";
+import { useEffect } from "react";
 export const RestaurantProfileForm = ({ initialData, onSave }) => {
-  const [profile, setProfile] = useState(
-    initialData || {
-      name: "Bharat’s Kitchen",
-      email: "bharatkitchen@example.com",
-      phone: "9876543210",
-      address: "Vijay Nagar, Indore, MP",
-      openingHours: "10:00 AM - 11:00 PM",
-     
-      banner: "",
-      open: true,
+  const { restaurants, loading, fetchRestaurantById, updateRestaurant } =
+    useContext(RestaurantContext);
+
+  const restid = localStorage.getItem("restarantId");
+
+  // form state
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    openingHours: "10:00 AM - 11:00 PM",
+    logo: null, // either filename string OR File object
+    poster: null, // either filename string OR File object
+    open: true,
+  });
+
+  // preview URLs (either remote URL or local object URL)
+  const [previewLogo, setPreviewLogo] = useState(null);
+  const [previewPoster, setPreviewposter] = useState(null);
+
+  // 1) initial fetch: load restaurant by id once
+  useEffect(() => {
+    if (restid) {
+      fetchRestaurantById(restid);
     }
-  );
+  }, [restid, fetchRestaurantById]);
 
-  const [previewLogo, setPreviewLogo] = useState(profile.image);
-  const [previewBanner, setPreviewBanner] = useState(profile.banner);
+  // 2) when restaurant data arrives, fill the form and previews
+  useEffect(() => {
+    if (restaurants && restaurants.name) {
+      setProfile((prev) => ({
+        ...prev,
+        name: restaurants.name || "",
+        email: restaurants.email || "",
+        phone: restaurants.phone || "",
+        address: restaurants.address || "",
+        openingHours: restaurants.openingHours || "10:00 AM - 11:00 PM",
+        // keep backend-stored filename strings here so we know current file
+        logo: restaurants.logo || null,
+        poster: restaurants.poster || null,
+        open: restaurants.open ?? true,
+      }));
 
+      setPreviewLogo(
+        restaurants.logo
+          ? `http://localhost:2000/uploads/${restaurants.logo}`
+          : null
+      );
+      setPreviewposter(
+        restaurants.poster
+          ? `http://localhost:2000/uploads/${restaurants.poster}`
+          : null
+      );
+    }
+  }, [restaurants]);
+
+  // text inputs
   const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setProfile((p) => ({ ...p, [name]: value }));
   };
 
+  // file inputs
   const handleFileChange = (e, type) => {
-    const file = e.target.files[0];
-    if (file) {
-      const previewURL = URL.createObjectURL(file);
-      setProfile({ ...profile, [type]: file });
-      if (type === "logo") setPreviewLogo(previewURL);
-      if (type === "banner") setPreviewBanner(previewURL);
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // set file object into profile so we can send it later
+    setProfile((p) => ({ ...p, [type]: file }));
+
+    // show instant preview
+    const previewURL = URL.createObjectURL(file);
+    if (type === "logo") setPreviewLogo(previewURL);
+    if (type === "poster") setPreviewposter(previewURL);
+  };
+
+  // FORM SUBMIT: build FormData and call updateRestaurant
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!restid) {
+      alert("Restaurant id missing");
+      return;
+    }
+
+    // build FormData
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("name", profile.name || "");
+    formData.append("email", profile.email || "");
+    formData.append("phone", profile.phone || "");
+    formData.append("address", profile.address || "");
+    formData.append("openingHours", profile.openingHours || "");
+    formData.append("open", profile.open ? "true" : "false");
+
+    // Append files only if they are File objects (i.e. user selected new files)
+    if (profile.logo instanceof File) {
+      formData.append("logo", profile.logo);
+    }
+    // If logo is filename string (no new file chosen), do NOT append. Backend should keep existing file.
+    if (profile.poster instanceof File) {
+      formData.append("poster", profile.poster);
+    }
+
+    // Call context updater (make sure it handles FormData)
+    try {
+      updateRestaurant(restid, formData);
+      alert("✅ Restaurant Updated Successfully!");
+      if (onSave) onSave(profile);
+    } catch (err) {
+      console.error("Update error:", err);
+      alert("Update failed. See console for details.");
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("✅ Restaurant Profile Updated Successfully!");
-    if (onSave) onSave(profile);
-  };
-
+  if (loading) return <div>Loading...</div>;
   return (
     <div className="container my-5">
       <Card
@@ -185,9 +269,9 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
                 Upload Logo
                 <input
                   type="file"
-                  hidden
+                  name="logo"
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, "image")}
+                  onChange={(e) => handleFileChange(e, "logo")}
                 />
               </Button>
             </Box>
@@ -197,10 +281,10 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
               🖼️ Banner Image
             </Typography>
             <Box className="text-center mb-4">
-              {previewBanner ? (
+              {previewPoster ? (
                 <img
-                  src={previewBanner}
-                  alt="Banner"
+                  src={previewPoster}
+                  alt="Poster"
                   style={{
                     width: "100%",
                     height: "180px",
@@ -212,7 +296,7 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
                 />
               ) : (
                 <Typography sx={{ color: "gray", mb: 1 }}>
-                  No banner selected
+                  No Poster selected
                 </Typography>
               )}
               <Button
@@ -228,12 +312,12 @@ export const RestaurantProfileForm = ({ initialData, onSave }) => {
                   "&:hover": { backgroundColor: "rgba(238,9,121,0.1)" },
                 }}
               >
-                Upload Banner
+                Upload Poster
                 <input
                   type="file"
-                  hidden
+                  name="poster"
                   accept="image/*"
-                  onChange={(e) => handleFileChange(e, "banner")}
+                  onChange={(e) => handleFileChange(e, "poster")}
                 />
               </Button>
             </Box>

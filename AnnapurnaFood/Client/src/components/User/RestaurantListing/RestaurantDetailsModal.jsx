@@ -47,10 +47,7 @@ const RestaurantDetail = () => {
         className="restaurant-banner position-relative"
         style={{
           height: "300px",
-          backgroundImage: `url(${
-            restaurant.image ||
-            "https://images.unsplash.com/photo-1613946069412-38f7f1ff0b65?auto=format&fit=crop&w=800&q=80"
-          })`,
+          backgroundImage: `url(${`http://localhost:2000/upload/${restaurant.poster}`})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           borderBottom: "4px solid #FF6A00",
