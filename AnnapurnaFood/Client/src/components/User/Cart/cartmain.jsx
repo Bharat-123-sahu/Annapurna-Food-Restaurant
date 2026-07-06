@@ -16,7 +16,7 @@ const CartMain = () => {
     useContext(CartContext);
   const [loginReady, setLoginReady] = useState(false);
 
-  // Step 1: Load token
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
@@ -24,7 +24,6 @@ const CartMain = () => {
     }
   }, []);
 
-  // Step 2: Fetch cart ONLY when token is ready
   useEffect(() => {
     if (!loginReady) return;
     fetchCart();
@@ -38,7 +37,6 @@ const CartMain = () => {
   const handleRemove = (itemId) => {
     removeItem(itemId);
   };
-  // ✅ Loader
   if (loading)
     return (
       <Box
@@ -49,11 +47,11 @@ const CartMain = () => {
       </Box>
     );
 
-  // ✅ Empty state
+
   if (cart.length === 0)
     return <h5 className="text-center text-muted my-5">Add food items 😞</h5>;
 
-  // ✅ Render all foods
+ 
   return (
     <div className="container mt-4">
       {cart.length === 0 ? (
